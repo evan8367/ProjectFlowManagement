@@ -1,0 +1,370 @@
+/*
+ * Copyright (C), 2013-2014, 
+ * FileName: EmailTask.java
+ * Author:   yeegor
+ * Date:     2014年10月16日 下午1:30:32
+ */
+package com.sdx.merak.common.email;
+
+import java.io.Serializable;
+
+import javax.mail.Address;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+/**
+ * 实体类EmailTask   
+ * 
+ * @author yeegor
+ */
+@Entity(name = "EMAIL_TASK")
+public class EmailTask implements Serializable {
+    /**
+     * Serial UID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * ID 
+     */
+    private Long id;
+    /**
+     * TO_EMAIL  接收者邮件地址
+     */
+    @EmailTaskParamsRequired
+    private String toEmail;
+    /**
+     * SUBJECT  主题
+     */
+    private String subject;
+    /**
+     * EMAIL_TEXT  发送内容
+     */
+    private String emailText;
+    /**
+     * TASK_LANGUAGE 语言类型
+     * en | local
+     */
+    @EmailTaskParamsOptional
+    private String taskLanguage;
+    /**
+     * PERSONAL 个人签名|FullName
+     */
+    @EmailTaskParamsRequired
+    private String personal;
+    /**
+     * BIZ_TYPE 业务类型
+     * @see EmailTemplateType
+     */
+    @EmailTaskParamsRequired
+    private Integer bizType;
+    /**
+     * STATUS 任务状态
+     */
+    private Integer status;
+    
+    /**
+     * 操作人contactId
+     * 在send request invitation link中使用
+     */
+    @EmailTaskParamsOptional
+    private Long opContactId;
+    
+    /**
+     * 修改密码中使用
+     */
+    @EmailTaskParamsOptional
+    private String token;
+    
+    /**
+     * 公用字段：
+     * 1.发送request invitation时记录邀请人邮箱加密后的字符串
+     * 2.message_rfp_notification email  记录messageId
+     * 3.rfp_warnning_message content
+     * 4.not_accept_agreement
+     */
+    @EmailTaskParamsOptional
+    private String taskKey;
+    
+    @Transient
+    private String fromEmail;   //发件人账号
+    
+    @Transient
+    private String fromPassword; //发件人密码
+    
+    @Transient
+    private SendEmailAdapter adapter;
+    
+    @Transient
+    private Address[] toAddress;
+    
+    @EmailTaskParamsOptional
+    @Transient
+    private String bbc;  //密送
+
+    /**
+     * Get id
+     * 
+     * @return id
+     */
+    @Id
+    @GeneratedValue(strategy =  GenerationType.TABLE)
+    @Column(name = "ID")
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * Set id
+     * 
+     * @param id ID
+     */
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Get toEmail
+     * 
+     * @return toEmail
+     */
+    @Column(name = "TO_EMAIL")
+    public String getToEmail() {
+        return this.toEmail;
+    }
+
+    /**
+     * Set toEmail
+     * 
+     * @param toEmail TO_EMAIL
+     */
+
+    public void setToEmail(String toEmail) {
+        this.toEmail = toEmail;
+    }
+
+    /**
+     * Get subject
+     * 
+     * @return subject
+     */
+    @Column(name = "SUBJECT")
+    public String getSubject() {
+        return this.subject;
+    }
+
+    /**
+     * Set subject
+     * 
+     * @param subject SUBJECT
+     */
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    /**
+     * Get emailText
+     * 
+     * @return emailText
+     */
+    @Column(name = "EMAIL_TEXT")
+    public String getEmailText() {
+        return this.emailText;
+    }
+
+    /**
+     * Set emailText
+     * 
+     * @param emailText EMAIL_TEXT
+     */
+
+    public void setEmailText(String emailText) {
+        this.emailText = emailText;
+    }
+
+    /**
+     * Get personal
+     * 
+     * @return personal
+     */
+    @Column(name = "PERSONAL")
+    public String getPersonal() {
+        return this.personal;
+    }
+
+    /**
+     * Set personal
+     * 
+     * @param personal PERSONAL
+     */
+
+    public void setPersonal(String personal) {
+        this.personal = personal;
+    }
+
+    /**
+     * Get bizType
+     * 
+     * @return bizType
+     */
+    @Column(name = "BIZ_TYPE")
+    public Integer getBizType() {
+        return this.bizType;
+    }
+
+    /**
+     * Set bizType
+     * 
+     * @param bizType BIZ_TYPE
+     */
+
+    public void setBizType(Integer bizType) {
+        this.bizType = bizType;
+    }
+
+    /**
+     * Get status
+     * 
+     * @return status
+     */
+    @Column(name = "STATUS")
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    /**
+     * Set status
+     * 
+     * @param status STATUS
+     */
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+	public String getFromEmail() {
+		return fromEmail;
+	}
+
+	public void setFromEmail(String fromEmail) {
+		this.fromEmail = fromEmail;
+	}
+
+	public String getFromPassword() {
+		return fromPassword;
+	}
+
+	public void setFromPassword(String fromPassword) {
+		this.fromPassword = fromPassword;
+	}
+
+	public SendEmailAdapter getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(SendEmailAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	public Address[] getToAddress() {
+		return toAddress;
+	}
+
+	public void setToAddress(Address[] toAddress) {
+		this.toAddress = toAddress;
+	}
+
+    /**
+     * Get opContactId
+     * 
+     * @return opContactId
+     */
+    @Column(name = "OP_CONTACT_ID")
+    public Long getOpContactId() {
+        return this.opContactId;
+    }
+
+    /**
+     * Set opContactId
+     * 
+     * @param opContactId OP_CONTACT_ID
+     */
+
+    public void setOpContactId(Long opContactId) {
+        this.opContactId = opContactId;
+    }
+
+    /**
+     * Get token
+     * 
+     * @return token
+     */
+    @Column(name = "TOKEN")
+    public String getToken() {
+        return this.token;
+    }
+
+    /**
+     * Set token
+     * 
+     * @param token TOKEN
+     */
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    /**
+     * Get taskKey
+     * 
+     * @return taskKey
+     */
+    @Column(name = "TASK_KEY")
+    public String getTaskKey() {
+        return this.taskKey;
+    }
+
+    /**
+     * Set taskKey
+     * 
+     * @param taskKey TASK_KEY
+     */
+
+    public void setTaskKey(String taskKey) {
+        this.taskKey = taskKey;
+    }
+    /**
+     * Get taskLanguage
+     * 
+     * @return taskLanguage
+     */
+    @Column(name = "TASK_LANGUAGE")
+    public String getTaskLanguage() {
+        return this.taskLanguage;
+    }
+
+    /**
+     * Set taskLanguage
+     * 
+     * @param taskLanguage TASK_LANGUAGE
+     */
+
+    public void setTaskLanguage(String taskLanguage) {
+        this.taskLanguage = taskLanguage;
+    }
+
+	public String getBbc() {
+		return bbc;
+	}
+
+	public void setBbc(String bbc) {
+		this.bbc = bbc;
+	}
+
+}

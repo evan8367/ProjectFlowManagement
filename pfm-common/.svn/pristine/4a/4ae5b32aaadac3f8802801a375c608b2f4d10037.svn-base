@@ -1,0 +1,48 @@
+package com.sdx.merak.common.file;
+
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sdx.merak.common.fdfs.FastdfsClient;
+import com.sdx.merak.common.fdfs.FastdfsClientFactory;
+
+@Service
+public class FdfsFileClientImpl implements DistributeFileClient, InitializingBean {
+
+	private static final Logger LOG = LoggerFactory.getLogger(FdfsFileClientImpl.class);
+
+	@Autowired
+	Properties properties;
+
+	FastdfsClient fastdfsClient = null;
+
+	@Override
+	public String saveFile(String localFileName, String bizType) {
+		String result = null;
+		try {
+			result = fastdfsClient.upload(localFileName);
+		} catch (Exception e) {
+			LOG.error("FdfsFileClientImpl saveFile error ", e);
+		}
+
+		return result;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		fastdfsClient = FastdfsClientFactory.getFastdfsClient(properties.getProperty("fdfs.tracker_server"));
+	}
+
+	public static void main(String args[]) throws Exception {
+		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient("192.168.100.9:22122");
+		String file = "/Users/lz/Desktop/top/img/1.jpg";
+		String fileId = fastdfsClient.upload(file);
+		System.out.println(fileId);
+	}
+
+}

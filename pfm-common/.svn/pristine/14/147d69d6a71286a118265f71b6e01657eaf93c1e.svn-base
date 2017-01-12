@@ -1,0 +1,16 @@
+package com.sdx.merak.common.sms.dto.req;
+
+/**
+ * 余额及发送量查询接口
+ * @author Aaron
+ *
+ */
+public class SMSOverageReq extends SMSReq {
+
+	private static final long serialVersionUID = 6162812252252046950L;
+	
+	public SMSOverageReq(SMSReq smsReq) {
+		super.setAccount(smsReq.getAccount());
+		super.setPassword(smsReq.getPassword());
+	}
+}

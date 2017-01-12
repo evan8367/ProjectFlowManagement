@@ -1,0 +1,53 @@
+package com.sdx.merak.common.fdfs;
+
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
+import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sdx.merak.common.fdfs.client.StorageClient;
+import com.sdx.merak.common.fdfs.client.StorageClientFactory;
+import com.sdx.merak.common.fdfs.client.TrackerClient;
+import com.sdx.merak.common.fdfs.client.TrackerClientFactory;
+
+public class FastdfsClientFactory {
+
+	private static Logger logger = LoggerFactory.getLogger(FastdfsClientFactory.class);
+
+	private static volatile FastdfsClient fastdfsClient;
+	private static FastdfsClientConfig config = null;
+
+	public FastdfsClientFactory() {
+	}
+
+	public static FastdfsClient getFastdfsClient(String trackerServer) {
+		if (fastdfsClient == null) {
+			synchronized (FastdfsClient.class) {
+				if (fastdfsClient == null) {
+					try {
+						config = new FastdfsClientConfig(trackerServer);
+					} catch (ConfigurationException e) {
+						logger.warn("Load fastdfs config failed.", e);
+					}
+					int connectTimeout = config.getConnectTimeout();
+					int networkTimeout = config.getNetworkTimeout();
+					TrackerClientFactory trackerClientFactory = new TrackerClientFactory(connectTimeout,
+							networkTimeout);
+					StorageClientFactory storageClientFactory = new StorageClientFactory(connectTimeout,
+							networkTimeout);
+					GenericKeyedObjectPoolConfig trackerClientPoolConfig = config.getTrackerClientPoolConfig();
+					GenericKeyedObjectPoolConfig storageClientPoolConfig = config.getStorageClientPoolConfig();
+					GenericKeyedObjectPool<String, TrackerClient> trackerClientPool = new GenericKeyedObjectPool<String, TrackerClient>(
+							trackerClientFactory, trackerClientPoolConfig);
+					GenericKeyedObjectPool<String, StorageClient> storageClientPool = new GenericKeyedObjectPool<String, StorageClient>(
+							storageClientFactory, storageClientPoolConfig);
+					String trackerAddr = config.getTrackerAddr();
+					fastdfsClient = new FastdfsClientImpl(trackerAddr, trackerClientPool, storageClientPool);
+				}
+			}
+		}
+		return fastdfsClient;
+	}
+
+}

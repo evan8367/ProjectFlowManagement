@@ -1,0 +1,44 @@
+package com.sdx.merak.common.email;
+
+/**
+ * 邮件模板类型
+ * @author yeegor
+ *
+ */
+public enum EmailTemplateType {
+	
+	/** 发送邀请函(request invitation link)邮件 **/
+	SEND_REQUEST_INVITATION_LINK(0),
+	/** 发送邀请邮件 **/
+	SEND_INVITATION(1),
+	/** 发送密码修改链接邮件 **/
+	SEND_MODIFY_PASSWORD_EMAIL(2),
+	/** 自动回复 **/
+	AUTO_REPLY(3),
+	/** RFP新消息通知邮件**/
+	MESSAGE_RFP_NOTIFICATION(4),
+	/** RFP警告通知, 仅发送给merak内部 **/
+	RFP_WARNNING_MESSAGE(5),
+	/** RFP内容邮件通知 **/
+	RFP_DETAIL_NOTIFICATION(6),
+	/** 用户不同意协议 **/
+	USER_NOT_AGREEMENT(7),
+	/** 后台管理通知-身份验证码 **/
+	ADMIN_NOTIFICATION_AUTH_CODE(8),
+	/** 后台授权验-登陆证码**/
+	ADMIN_NOTIFICATION_USERTOKEN_CODE(9),
+	/** 公司添加合作酒店或酒店移除合作公司通知**/
+	COOPERATE_NOTIFICATION(10),
+	/**app设备绑定发送验证码**/
+	APP_DEVICE_BIND_VERIFY_CODE(11);
+	
+	private final int value;
+	
+	EmailTemplateType(int value) {
+		this.value = value;
+	}
+
+	public int value() {
+		return value;
+	}
+}

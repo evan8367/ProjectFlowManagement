@@ -1,0 +1,17 @@
+package com.sdx.merak.common.fdfs.client;
+
+import java.io.File;
+import java.io.IOException;
+
+import com.sdx.merak.common.fdfs.data.Result;
+
+public interface StorageClient {
+	
+	public Result<String> upload(File file,String fileName,byte storePathIndex) throws IOException;
+	public void close() throws IOException;
+    /**
+     * check storage client socket is closed
+     * @return boolean
+     */
+    public boolean isClosed();
+}

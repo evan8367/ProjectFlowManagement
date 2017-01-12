@@ -1,0 +1,6 @@
+dubbo.zookeeper_address=192.168.100.16:2181,192.168.100.17:2181,192.168.100.3:2181
+dubbo.bfs_port=20888
+dubbo.sso_port=20889
+dubbo.protal_port=20890
+dubbo.review_port=20891
+dubbo.admin_port=20893

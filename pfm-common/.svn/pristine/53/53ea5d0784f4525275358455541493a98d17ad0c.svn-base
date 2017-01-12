@@ -1,0 +1,18 @@
+package com.sdx.merak.common.sms;
+
+import org.apache.commons.lang3.StringUtils;
+
+public final class SMSUtils {
+	
+	private static final int MOBILE_NUMBER_LENGTH = 11;
+
+	public static boolean isMobileNumber(String mobileNumber) {
+		
+		if (StringUtils.isBlank(mobileNumber)) {
+			return false;
+		}
+		
+		return StringUtils.isNumeric(mobileNumber) && mobileNumber.length()==MOBILE_NUMBER_LENGTH;
+	}
+	
+}

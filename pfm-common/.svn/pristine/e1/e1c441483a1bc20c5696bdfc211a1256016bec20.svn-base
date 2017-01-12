@@ -1,0 +1,46 @@
+package com.sdx.merak.common.email;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+/**
+ * 邮件发送组件
+ * @author yeegor
+ *
+ */
+public class SendEmailComponetImpl implements SendEmailComponet2 {
+	
+	@Autowired
+	EmailTaskService2 emailTaskService2;
+	
+	@Autowired
+	SysEmailSendRule2 sysEmailSendRule2;
+ 
+	public boolean addEmailTask(EmailTask emailTask) {
+		if (emailTask == null) {
+			return false;
+		}
+		return emailTaskService2.addTask(emailTask);
+	}
+
+	@Override
+	public boolean addSystemEmailTask(SysEmailTask sysEmailTask) {
+		if (sysEmailTask == null) {
+			return false;
+		}
+		return sysEmailSendRule2.addSysEmailTaskOnRule(sysEmailTask);
+	}
+
+	@Override
+	public boolean addSystemEmailTask(String serverIP, String exceptionInfo, String parameterInfo) {
+		if (StringUtils.isBlank(exceptionInfo)) {
+			return false;
+		}
+		SysEmailTask sysEmailTask = new SysEmailTask();
+		sysEmailTask.setServerIp(serverIP);
+		sysEmailTask.setExceptionInfo(exceptionInfo);
+		sysEmailTask.setParameterInfo(parameterInfo);
+		return addSystemEmailTask(sysEmailTask);
+	}
+}

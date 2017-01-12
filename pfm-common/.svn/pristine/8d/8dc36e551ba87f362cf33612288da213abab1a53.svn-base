@@ -1,0 +1,151 @@
+package com.sdx.meark.test.redis;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.Test;
+
+import com.sdx.meark.test.BaseTest;
+import com.sdx.merak.common.redis.RedisClient;
+
+public class RedisTest extends BaseTest{
+
+	
+	
+	@Autowired
+	RedisClient redisClient ;
+	
+//	@Test
+	public void getString()
+	{
+		 redisClient.setString("testString1" , "string1") ;
+		 redisClient.setString("testString2" , "string2") ;
+		 redisClient.setString("testString3" , "string4") ;
+		 redisClient.setString("testString4" , "string3") ;
+		
+	}
+	
+//	@Test
+	public void delete()
+	{
+		
+		
+		redisClient.delete("SERVER_URL_FOR_APP");
+		
+	}
+	
+	
+//	@Test
+	public void setObject()
+	{
+		
+		UserTest u = new UserTest() ;
+		u.setId("123321");
+		u.setName("test");
+		redisClient.setObject("objectKey2", u);
+		
+	}
+	
+//	@Test
+	public void getObject()
+	{
+		
+		UserTest s = 	redisClient.getObject("objectKey2" ) ;
+		
+		
+
+		System.out.println(s);
+		
+	}
+	
+//	@Test
+	public void setMap()
+	{
+		UserTest u = new UserTest() ;
+		u.setId("123321");
+		u.setName("test");
+		
+		UserTest u2 = new UserTest() ;
+		u2.setId("123321");
+		u2.setName("test");
+		
+		Map<String, UserTest> map = new HashMap<String, UserTest>() ;
+		
+		map.put("u", u) ;
+		map.put("u2", u2) ;
+		
+		redisClient.setHash("setMap", map);
+		
+	}
+	
+//	@Test
+	public void getHash()
+	{
+		
+		UserTest  u = redisClient.getHash("setMap", "u") ;
+		
+		
+		System.out.println(u);
+		
+	}
+	
+//	@Test
+	public void getHashMap()
+	{
+		
+		Map<String , UserTest> map = redisClient.getHash("setMap") ;
+		
+		
+		System.out.println(map);
+		
+	}
+	
+	//@Test
+	public void testIsExistKey() {
+		System.out.println("result is " + redisClient.isExistsKey("LOGIN_TOKEN_PRE_53e252cdced64bcd9c09d6dfe855e3b6"));
+		//System.out.println("result is " + redisClient.isExistsKey("LOGIN_RECORD_PRE_XXXXX"));
+	}
+	
+	//@Test
+	public void testSetObject() {
+		String key = "Aaron.Lee0311_LOGIN_TOKEN_PRE_0974e1a778c441c7b5f6177f940bdaa8";
+		
+		Aaron raw = new Aaron();
+		raw.setName("Aaron Lee");
+		
+		redisClient.setObject(key, raw);
+		System.out.println("result is " + redisClient.isExistsKey(key));
+		
+		Aaron a = redisClient.getObject(key);
+		
+		System.out.println(a.getName());
+		
+		redisClient.delete(key);
+		
+		Aaron a1 = redisClient.getObject(key);
+		
+		System.out.println(null == a1);
+	} 
+	
+	@Test
+	public void testGetListByKeys() {
+//		redisClient.setObject("GetListByKeys_1", "Lee");
+//		redisClient.setObject("GetListByKeys_2", "Jun");
+		
+		List<String> keys = new ArrayList<String>();
+		keys.add("GetListByKeys_1");
+		keys.add("GetListByKeys_2");
+		keys.clear();
+		keys.add("GetListByKeys_3");
+		
+		List<String> result = redisClient.getList(keys);
+		System.out.println("get : " + redisClient.getString("GetListByKeys_1"));
+		System.out.println("get : " + redisClient.getString("GetListByKeys_2"));
+		
+		System.out.println("getList : " + result.toString());
+	}
+	
+}

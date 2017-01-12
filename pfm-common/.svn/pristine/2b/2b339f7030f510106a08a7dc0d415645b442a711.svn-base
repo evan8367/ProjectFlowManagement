@@ -1,0 +1,70 @@
+package com.sdx.meark.test.sms;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.Test;
+
+import com.google.gson.Gson;
+import com.sdx.meark.test.BaseTest;
+import com.sdx.merak.common.sms.SMSCommponet;
+import com.sdx.merak.common.sms.dto.SMSChannel;
+import com.sdx.merak.common.sms.dto.resp.SMSOverageResp;
+import com.sdx.merak.common.sms.dto.resp.SMSSendResp;
+
+public class SMSTest extends BaseTest {
+	
+	@Autowired
+	SMSCommponet smsCommponet;
+	
+	@Test
+	public void testGetSMSOverage() {
+		SMSOverageResp resp = smsCommponet.getSMSOverage(SMSChannel.AUTH_CODE_CHANNEL);
+		if (null != resp) {
+			Gson gson = new Gson();
+			System.out.println("testGetSMSOverage返回 : " + gson.toJson(resp));
+			return;
+		}
+		
+		System.err.println("testGetSMSOverage返回为空");
+	}
+	
+	//@Test
+	public void testSendSMS() {
+		
+		List<String> mobiles = new ArrayList<String>();
+		mobiles.add("15195764928");
+		//mobiles.add("13770655706");
+		
+		//String content = "【觅 星】Congratulations! You have received 100 lucky points from Merak.";
+		String content = "【觅 星】 MerakVIP客户对VIP会议进行了好评，恭喜您获得200积分";
+		SMSSendResp smsSendResp = smsCommponet.sendSMS(SMSChannel.BUSINESS_NOTIFICATION_CHANNEL, mobiles, content, null);
+		
+		if (null != smsSendResp) {
+			Gson gson = new Gson();
+			System.out.println("testSendSMS返回 : " + gson.toJson(smsSendResp));
+			return;
+		}
+		
+		System.err.println("testSendSMS返回为空");
+	}
+	
+	//@Test
+	public void testSendSMSSchemes() {
+		
+		List<String> mobiles = new ArrayList<String>();
+		mobiles.add("15195764928");
+		
+		SMSSendResp smsSendResp = smsCommponet.sendSMS(SMSChannel.BUSINESS_NOTIFICATION_CHANNEL, mobiles, "您的验证码是5858【畅卓科技】", "2016-09-22 16:00:00");
+		
+		if (null != smsSendResp) {
+			Gson gson = new Gson();
+			System.out.println("testSendSMS返回 : " + gson.toJson(smsSendResp));
+			return;
+		}
+		
+		System.err.println("testSendSMS返回为空");
+	}
+	
+}

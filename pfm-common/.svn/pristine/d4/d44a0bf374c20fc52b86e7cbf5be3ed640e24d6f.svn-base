@@ -1,0 +1,109 @@
+package com.sdx.merak.common.email;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.sdx.merak.common.dal.DalClient;
+
+public class EmailTaskServiceImpl implements EmailTaskService2 {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmailTaskServiceImpl.class);
+
+	@Autowired
+	DalClient dalClient;
+
+	@Override
+	public boolean addTask(EmailTask emailTask) {
+		if (emailTask!=null && validateParams(emailTask)) {
+			//保证数据正确，重新设置task状态
+			emailTask.setStatus(EmailTaskStatus.ACTIVE.value());
+			return dalClient.persist(emailTask)!=null;
+		}
+		return false;
+	}
+	
+	private boolean validateParams(EmailTask emailTask) {
+		if (StringUtils.isBlank(emailTask.getToEmail()) ||
+				StringUtils.isBlank(emailTask.getPersonal())
+				|| emailTask.getBizType()==null) {
+			LOGGER.warn("EmailTask参数不完整| toEmail is " + emailTask.getToEmail()
+					+ " and personal is " + emailTask.getPersonal()
+					+ " and taskBizType is " + emailTask.getBizType());
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public List<EmailTask> getActivityTask(Integer bizType) {
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("status", EmailTaskStatus.ACTIVE.value());
+		if (bizType != null) {
+			params.put("bizType", bizType);
+		}
+		params.put("startIndex", 0);
+		params.put("maxCount", 10);
+		
+		List<EmailTask> tasks = dalClient.queryForList("EMAIL_TASK.SELECT_BY_FIELDS", params, EmailTask.class);
+		
+		if (tasks == null) {
+			tasks = new ArrayList<EmailTask>();
+		}
+		
+		return tasks;
+	}
+
+	@Override
+	public boolean freezeTask(List<Long> ids) {
+		if (ids != null) {
+			int size = ids.size();
+			if (size == 0) {
+				return true;
+			}
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("ids", ids);
+			params.put("status", EmailTaskStatus.FREEZE.value());
+			return dalClient.execute("EMAIL_TASK.UPDATE_BY_KEYS", params)==size;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean freezeTask(Long id) {
+		if (id==null || id.compareTo(0l)==0) {
+			return false;
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		params.put("status", EmailTaskStatus.FREEZE.value());
+		
+		boolean isSuccess = dalClient.execute("EMAIL_TASK.UPDATE_BY_KEY", params)>0;
+		if (isSuccess) {
+			LOGGER.info("邮件任务{" + id + "}完成，冻结任务");
+		} else {
+			LOGGER.warn("邮件任务{" + id + "}完成，冻结失败");
+		}
+		
+		return isSuccess;
+	}
+
+	@Override
+	public boolean setExceptionTask(String email) {
+		if (StringUtils.isBlank(email)) {
+			return false;
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("conditon_toEmail", email);
+		params.put("status", EmailTaskStatus.EXCEPTION.value());
+		return dalClient.execute("EMAIL_TASK.UPDATE_BY_FIELDS", params)>0;
+	}
+
+}

@@ -1,0 +1,17 @@
+package com.sdx.merak.common.email;
+
+public enum SystemEmailTemplateType {
+	/** 内部错误 **/
+	INNER_EXCEPTION(0);
+	
+	private final int value;
+	
+	SystemEmailTemplateType(int value) {
+		this.value = value;
+	}
+	
+	public int value() {
+		return value;
+	}
+
+}

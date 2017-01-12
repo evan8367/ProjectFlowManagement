@@ -1,0 +1,63 @@
+package com.sdx.merak.common.redis.dto;
+
+import com.sdx.merak.common.redis.CacheConstants;
+
+/**
+ * 〈一句话功能简述〉<br>
+ * CacheKeys
+ * 
+ * @see [相关类/方法]（可选）
+ * @since [产品/模块版本] （可选）
+ */
+public enum CacheKeys {
+	
+    MERAK_ROOM_MEMBER("MERAK_ROOM_MEMBER_ROOM_ID_%s", CacheConstants.ONE_MINUTES),
+    MERAK_MANAGEMENT_ADMIN_USER("MERAK_MANAGEMENT_ADMIN_USER_%s", CacheConstants.SIXTY_MINUTES);
+    
+    private String key;
+
+    private int expire;
+
+    private static final int DEFAULT_EXPIRE = CacheConstants.SIXTY_MINUTES * CacheConstants.MerakNumber.TWENTY_FOUR;
+
+    private CacheKeys(String key, int expire) {
+        this.key = key;
+        this.expire = expire;
+    }
+
+    /**
+     * key <br>
+     */
+    public String key() {
+        return this.key;
+    }
+
+    /**
+     * expire <br>
+     */
+    public int expire() {
+        return this.expire;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Enum#toString()
+     */
+    @Override
+    public String toString() {
+        return this.key;
+    }
+
+    /**
+     * getExpire <br>
+     */
+    public static int getExpire(String key) {
+        for (CacheKeys cacheKey : CacheKeys.values()) {
+            if (key.equals(cacheKey.key)) {
+                return cacheKey.expire;
+            }
+        }
+
+        return DEFAULT_EXPIRE;
+    }
+}

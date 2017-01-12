@@ -1,0 +1,85 @@
+package com.sdx.merak.common.utils;
+
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
+import org.apache.commons.lang3.StringUtils;
+
+/**
+ * 拼音工具
+ * 
+ * @author zhuliang
+ */
+public class PinyinUtils {
+
+	public static String getFirstLetter(String source) {
+		String result = "";
+		if (StringUtils.isNotEmpty(source)) {
+			String[] pinyin = PinyinHelper.toHanyuPinyinStringArray(source.charAt(0));
+			if (pinyin == null) {
+				result = String.valueOf(source.charAt(0));
+			} else {
+				result = String.valueOf(pinyin[0].charAt(0));
+			}
+		}
+		return result.toUpperCase();
+	}
+	
+	/**
+	 * 返回字符串的拼音
+	 * 支持中英文
+	 * 忽略字符串中间的空字符串
+	 * @author Aaron
+	 * @param source
+	 * @return
+	 */
+	public static String getPinyin(String source) {
+		String pinyin = "";
+		if (StringUtils.isNotEmpty(source)) {
+			try {
+				HanyuPinyinOutputFormat hanyuPinyinOutputFormat = new HanyuPinyinOutputFormat();
+				hanyuPinyinOutputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+				pinyin = PinyinHelper.toHanYuPinyinString(source, hanyuPinyinOutputFormat, null, true);
+			} catch (BadHanyuPinyinOutputFormatCombination e) {
+				e.printStackTrace();
+			}
+		}
+		StringBuffer resultBuff = new StringBuffer();
+		String[] result = pinyin.split(" "); //去除拼音空格
+		for (String r : result) {
+			if (!StringUtils.isBlank(r)) {
+				resultBuff.append(r);
+			}
+		}
+		
+		return resultBuff.toString().toLowerCase();
+	}
+	
+	/**
+	 * 返回字符串首字母
+	 * 支持中英文
+	 * 忽略字符串中间的空字符串
+	 * @author Aaron
+	 * @param source
+	 * @return
+	 */
+	public static String getFirstPinyin(String source) {
+		
+		if (StringUtils.isBlank(source)) {
+			return null;
+		}
+		
+		StringBuffer resultBuff = new StringBuffer();
+		String[] result = source.split(" "); //去除拼音空格
+		for (String r : result) {
+			if (!StringUtils.isBlank(r)) {
+				resultBuff.append(getFirstLetter(r));
+			}
+		}
+		
+		return resultBuff.toString().toLowerCase();
+	}
+	
+}

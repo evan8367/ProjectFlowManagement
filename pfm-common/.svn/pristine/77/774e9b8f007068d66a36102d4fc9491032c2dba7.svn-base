@@ -1,0 +1,38 @@
+package com.sdx.merak.common.config;
+
+import java.io.InputStream;
+import java.util.logging.Level;
+
+import com.hazelcast.config.ClasspathXmlConfig;
+import com.hazelcast.config.Config;
+import com.hazelcast.logging.ILogger;
+import com.hazelcast.logging.Logger;
+import com.hazelcast.config.XmlConfigBuilder;
+
+public class Hazelcast3PathXmlConfig extends Config {
+
+	private final ILogger logger = Logger.getLogger(ClasspathXmlConfig.class
+			.getName());
+
+	public Hazelcast3PathXmlConfig() {
+		this("conf/hazelcast3/config_"
+				+ AppConfig.getEvnName() + ".xml");
+	}
+
+	public Hazelcast3PathXmlConfig(String resource) {
+		this(Thread.currentThread().getContextClassLoader(), resource);
+	}
+
+	public Hazelcast3PathXmlConfig(ClassLoader classLoader, String resource) {
+		super();
+		logger.log(Level.INFO,
+				"HazelcastPathXmlConfig | Configuring Hazelcast from '"
+						+ resource + "'.");
+		InputStream in = classLoader.getResourceAsStream(resource);
+		if (in == null) {
+			throw new NullPointerException("Specified resource '" + resource
+					+ "' could not be found!");
+		}
+		new XmlConfigBuilder(in).build();
+	}
+}

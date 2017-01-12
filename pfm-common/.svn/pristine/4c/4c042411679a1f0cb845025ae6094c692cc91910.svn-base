@@ -1,0 +1,7 @@
+package com.sdx.merak.common.fdfs;
+
+public interface FastdfsClient {
+	public String upload(String localFileName) throws Exception;
+
+	public void close();
+}

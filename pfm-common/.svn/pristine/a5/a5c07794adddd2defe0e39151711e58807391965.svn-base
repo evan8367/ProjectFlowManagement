@@ -1,0 +1,275 @@
+/*
+ * Copyright (C), 2013-2014, 
+ * FileName: SysEmailTask.java
+ * Author:   yeegor
+ * Date:     2014年10月16日 下午1:30:32
+ */
+package com.sdx.merak.common.email;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+/**
+ * 实体类SysEmailTask   
+ * 
+ * @author yeegor
+ */
+@Entity(name = "SYS_EMAIL_TASK")
+public class SysEmailTask implements Serializable {
+    /**
+     * Serial UID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * ID 
+     */
+    private Long id;
+    /**
+     * PARAMETER_INFO 
+     */
+    private String parameterInfo;
+    /**
+     * EXCEPTION_INFO 
+     */
+    private String exceptionInfo;
+    /**
+     * TASK_STATUS 
+     */
+    private Integer taskStatus;
+    /**
+     * TASK_COUNT 
+     */
+    private Integer taskCount;
+    /**
+     * ERROR_TYPE 
+     */
+    private Integer errorType;
+    
+    /**
+     * SERVER_IP 
+     */
+    private String serverIp;
+    
+    @Transient
+    private String personal = "Merak系统研发团队";
+    
+    @Transient
+    private String subject;
+    
+    @Transient
+    private String content;
+    
+    @Transient
+    private String fromEmail;
+    
+    @Transient
+    private String fromPassword;
+    
+    @Transient
+    private String toEmail;
+    
+    @Transient
+    private SendEmailAdapter adapter;
+
+    /**
+     * Get id
+     * 
+     * @return id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * Set id
+     * 
+     * @param id ID
+     */
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Get parameterInfo
+     * 
+     * @return parameterInfo
+     */
+    @Column(name = "PARAMETER_INFO")
+    public String getParameterInfo() {
+        return this.parameterInfo;
+    }
+
+    /**
+     * Set parameterInfo
+     * 
+     * @param parameterInfo PARAMETER_INFO
+     */
+
+    public void setParameterInfo(String parameterInfo) {
+        this.parameterInfo = parameterInfo;
+    }
+
+    /**
+     * Get exceptionInfo
+     * 
+     * @return exceptionInfo
+     */
+    @Column(name = "EXCEPTION_INFO")
+    public String getExceptionInfo() {
+        return this.exceptionInfo;
+    }
+
+    /**
+     * Set exceptionInfo
+     * 
+     * @param exceptionInfo EXCEPTION_INFO
+     */
+
+    public void setExceptionInfo(String exceptionInfo) {
+        this.exceptionInfo = exceptionInfo;
+    }
+
+    /**
+     * Get taskStatus
+     * 
+     * @return taskStatus
+     */
+    @Column(name = "TASK_STATUS")
+    public Integer getTaskStatus() {
+        return this.taskStatus;
+    }
+
+    /**
+     * Set taskStatus
+     * 
+     * @param taskStatus TASK_STATUS
+     */
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    /**
+     * Get taskCount
+     * 
+     * @return taskCount
+     */
+    @Column(name = "TASK_COUNT")
+    public Integer getTaskCount() {
+        return this.taskCount;
+    }
+
+    /**
+     * Set taskCount
+     * 
+     * @param taskCount TASK_COUNT
+     */
+
+    public void setTaskCount(Integer taskCount) {
+        this.taskCount = taskCount;
+    }
+
+    /**
+     * Get errorType
+     * 
+     * @return errorType
+     */
+    @Column(name = "ERROR_TYPE")
+    public Integer getErrorType() {
+        return this.errorType;
+    }
+
+    /**
+     * Set errorType
+     * 
+     * @param errorType ERROR_TYPE
+     */
+
+    public void setErrorType(Integer errorType) {
+        this.errorType = errorType;
+    }
+    
+    /**
+     * Get serverIp
+     * 
+     * @return serverIp
+     */
+    @Column(name = "SERVER_IP")
+    public String getServerIp() {
+        return this.serverIp;
+    }
+
+    /**
+     * Set serverIp
+     * 
+     * @param serverIp SERVER_IP
+     */
+
+    public void setServerIp(String serverIp) {
+        this.serverIp = serverIp;
+    }
+
+	public String getPersonal() {
+		return personal;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getFromEmail() {
+		return fromEmail;
+	}
+
+	public void setFromEmail(String fromEmail) {
+		this.fromEmail = fromEmail;
+	}
+
+	public String getFromPassword() {
+		return fromPassword;
+	}
+
+	public void setFromPassword(String fromPassword) {
+		this.fromPassword = fromPassword;
+	}
+
+	public String getToEmail() {
+		return toEmail;
+	}
+
+	public void setToEmail(String toEmail) {
+		this.toEmail = toEmail;
+	}
+
+	public SendEmailAdapter getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(SendEmailAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+}

@@ -1,0 +1,16 @@
+package com.sdx.merak.common.email;
+
+
+public abstract class SendEmailAdapter implements InterceptSendEmail {
+
+	@Override
+	public void beforeSendEmail() {
+
+	}
+
+	@Override
+	public void afterSendEmailFailed() {
+
+	}
+
+}

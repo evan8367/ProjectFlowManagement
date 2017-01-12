@@ -1,0 +1,43 @@
+package com.sdx.merak.common.sms.dto.req;
+
+import java.io.Serializable;
+
+/**
+ * 短信请求参数实体
+ * @author Aaron
+ */
+public class SMSReq implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	private String account;
+	
+	private String password;
+	
+	private String reqUrl;
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getReqUrl() {
+		return reqUrl;
+	}
+
+	public void setReqUrl(String reqUrl) {
+		this.reqUrl = reqUrl;
+	}
+	
+}

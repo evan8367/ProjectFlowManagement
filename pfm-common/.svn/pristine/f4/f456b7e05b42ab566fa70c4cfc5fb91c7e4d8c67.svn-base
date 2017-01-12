@@ -1,0 +1,14 @@
+package com.sdx.merak.common.sms.dto;
+
+/**
+ * 短息通道频道
+ * @author Aaron
+ */
+public enum SMSChannel {
+	
+	/** 验证码通道 **/
+	AUTH_CODE_CHANNEL,
+	/** 业务通知通道 **/
+	BUSINESS_NOTIFICATION_CHANNEL;
+	
+}

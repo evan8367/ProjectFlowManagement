@@ -1,0 +1,39 @@
+package com.sdx.merak.common.email;
+
+import java.util.List;
+
+/**
+ * SysEmailTask 对象队列操作
+ * @author yeegor
+ *
+ */
+public interface SystemEmailTaskService2 {
+	
+	int STEP_ACTION = 0;
+	/** 15分钟发送一次 **/
+	int ONE_STEP_COUNT = 1;
+	/** 1小时发送一次 **/
+	int TWO_STEP_COUNT = 2;
+	/** 12小时发送一次 **/
+	int THREE_STEP_COUNT = 3;
+	
+	int NO_STEP = 4;
+	
+	boolean addSysEmailTask(SysEmailTask sysEmailTask);
+	
+	
+	/**
+	 * 获取活动的email任务
+	 * @param taskCount
+	 * @return
+	 */
+	List<SysEmailTask> getActivityTask(Integer taskCount);
+	
+	/**
+	 * 根据taskId冻结email任务
+	 * @param ids
+	 */
+	boolean freezeTask(Long id);
+	
+
+}

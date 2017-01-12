@@ -1,0 +1,88 @@
+package com.sdx.merak.common.sms;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.google.gson.Gson;
+import com.sdx.merak.common.sms.dto.SMSChannel;
+import com.sdx.merak.common.sms.dto.req.SMSOverageReq;
+import com.sdx.merak.common.sms.dto.req.SMSSendReq;
+import com.sdx.merak.common.sms.dto.resp.SMSOverageResp;
+import com.sdx.merak.common.sms.dto.resp.SMSSendResp;
+import com.sdx.merak.common.utils.HttpClientUtil;
+
+@Component
+public class DefaultSMSCommponet implements SMSCommponet {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSMSCommponet.class);
+	
+	@Autowired
+	SMSReqUtil smsReqUtil;
+
+	@Override
+	public SMSOverageResp getSMSOverage(SMSChannel smsSMSChannel) {
+
+		SMSOverageReq smsOverageReq = smsReqUtil.getSMSOverageReq(smsSMSChannel);
+
+		if (null == smsOverageReq) {
+			LOGGER.warn("getSMSOverage请求失败,入参对象为空");
+			return null;
+		}
+		
+		Map<String, String> formData = new HashMap<String, String>();
+		formData.put("account", smsOverageReq.getAccount());
+		formData.put("password", smsOverageReq.getPassword());
+		String resp = HttpClientUtil.postData(smsOverageReq.getReqUrl(), formData, "utf-8");
+		
+		Gson gson = new Gson();
+		SMSOverageResp smsOverageResp = gson.fromJson(resp, SMSOverageResp.class);
+		return smsOverageResp;
+	}
+
+	@Override
+	public SMSSendResp sendSMS(SMSChannel smsSMSChannel, List<String> mobiles, String content,
+			String sendTime) {
+		
+		SMSSendReq smsSendReq = smsReqUtil.getSMSSendReq(smsSMSChannel);
+
+		if (null == smsSendReq) {
+			LOGGER.warn("sendSMS请求失败,入参对象为空");
+			return null;
+		}
+		
+		if (CollectionUtils.isEmpty(mobiles) || StringUtils.isBlank(content)) {
+			LOGGER.warn("sendSMS请求失败,必须存在的参数为空");
+			return null;
+		}
+		
+		StringBuffer mobileBuff = new StringBuffer();
+		for (String m : mobiles) {
+			mobileBuff.append(m);
+			mobileBuff.append(",");
+		}
+		String mobile = mobileBuff.substring(0, mobileBuff.length()-1);
+		Map<String, String> formData = new HashMap<String, String>();
+		formData.put("account", smsSendReq.getAccount());
+		formData.put("password", smsSendReq.getPassword());
+		
+		formData.put("mobile", mobile);
+		formData.put("content", content);
+		if (StringUtils.isNotBlank(sendTime)) {
+			formData.put("sendTime", sendTime);
+		}
+		String resp = HttpClientUtil.postData(smsSendReq.getReqUrl(), formData, "utf-8");
+		
+		Gson gson = new Gson();
+		SMSSendResp smsSendResp = gson.fromJson(resp, SMSSendResp.class);
+		
+		return smsSendResp;
+	}
+}

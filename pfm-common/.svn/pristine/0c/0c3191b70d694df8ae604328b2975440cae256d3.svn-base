@@ -1,0 +1,231 @@
+package com.sdx.merak.common.dal;
+
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Id;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BaseDao {
+	
+	private static Logger logger = LoggerFactory.getLogger(BaseDao.class);
+
+	@Autowired
+	DalClient dalClient;
+
+	@Autowired
+	NamedParameterJdbcTemplate jdbcTemplate;
+
+	/**
+	 * 当对象的主键为空时保存对象，当对象的主键id非空时更新对象(该方法只适用以id为主键的对象,主键必须为Long类型)
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public Long save(Object obj) {
+
+		Long longValue = null;
+
+		Class clazz = obj.getClass();
+
+		Object keyValue = null;
+
+		Method idMethod = getIdMethod(clazz);
+		if (idMethod != null) {
+			try {
+				keyValue = idMethod.invoke(obj, null);
+			} catch (Exception e) {
+				throw new RuntimeException("对象保存失败") ;
+			}
+		}
+
+		if (null == keyValue) {
+			longValue = dalClient.persist(obj).longValue();
+		} else {
+			dalClient.mergeWithoutNull(obj);
+			longValue = Long.parseLong(String.valueOf(keyValue)) ;
+		}
+
+		return longValue;
+	}
+
+	
+	/**
+	 * 获取主键对应的get方法
+	 * @param clazz
+	 * @return
+	 */
+	private Method getIdMethod(Class clazz) {
+		Method iDmethod = null;
+
+		Method[] methods = clazz.getMethods();
+
+		for (Method method : methods) {
+			Id id = method.getAnnotation(Id.class);
+
+			if (id != null) {
+
+				iDmethod = method;
+				break;
+
+			}
+
+		}
+
+		return iDmethod;
+
+	}
+
+	/**
+	 * 获取主键对应的set方法
+	 * @param clazz
+	 * @return
+	 * @throws Exception
+	 */
+	private Method getSetMethod(Class clazz) throws Exception {
+		Method setMethod = null;
+		Method idMethod = getIdMethod(clazz);
+
+		if (idMethod != null) {
+			String getname = idMethod.getName();
+			String setname = "set" + getname.substring(3);
+
+			setMethod = clazz.getMethod(setname, idMethod.getReturnType());
+		}
+
+		return setMethod;
+
+	}
+
+	/**
+	 * 根据主键查询单个对象
+	 * @param clazz
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> T getObjectById(Class<T> clazz, Object id)  {
+		T rtObj = null;
+		
+		if(id != null )
+		{
+			
+			try {
+				
+				T obj = clazz.newInstance();
+				
+				Method setMethod = getSetMethod(clazz);
+				
+				if (setMethod != null) {
+					
+					setMethod.invoke(obj, id);
+					
+					rtObj = dalClient.find(clazz, obj);
+					
+					if(rtObj != null )
+					{
+						setMethod.invoke(rtObj, id);
+						
+					}
+					
+				}
+			} catch (Exception e) {
+//				logger.error("对象查询失败，clazz:"+clazz +",id:"+id);
+				
+			}
+			
+		}
+		
+
+		return rtObj;
+	}
+
+	/**
+	 * 根据条件查询列表
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public <T> List<T> getList(Class<T> clazz, Map<String, Object> map) {
+
+		String sql = SqlParser.getSqlParser(clazz).getSelectByFiledSql();
+
+		sql = StringTemplateLoader.proccessToString(map, sql);
+
+		return jdbcTemplate.query(sql, map, new BeanPropertyRowMapper<T>(clazz));
+
+	}
+	
+	
+
+	/**
+	 * 根据条件查询数量
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public <T> Long getListCount(Class<T> clazz, Map<String, Object> map)  {
+
+		String sql = SqlParser.getSqlParser(clazz).getSelectCountByFiled();
+
+		sql = StringTemplateLoader.proccessToString(map, sql);
+
+		Map<String, Object> rtMap = jdbcTemplate.queryForMap(sql, map);
+
+		String num = String.valueOf(rtMap.get("NUM"));
+
+		return Long.parseLong(num);
+	}
+
+	/**
+	 * 根据主键删除对象
+	 * 
+	 * @param id
+	 */
+	public <T> void deleteById(Class<T> clazz, Long id) throws Exception {
+
+		T obj = clazz.newInstance();
+
+		Method setMethod = getSetMethod(clazz);
+
+		if (setMethod != null) {
+
+			setMethod.invoke(obj, id);
+
+		}
+
+		dalClient.remove(obj);
+
+	}
+	
+
+	/**
+	 * 
+	 * 根据字段删除表记录，
+	 * <br/><font  color="red">本方法使用须谨慎，当map中无对应字段时会导致全表删除</font>
+	 * @param clazz
+	 * @param map
+	 * @return
+	 */
+	public <T> int deleteByField(Class<T> clazz, Map<String, Object> map) {
+
+		String sql = SqlParser.getSqlParser(clazz).getDeleteByFiled() ;
+
+		sql = StringTemplateLoader.proccessToString(map, sql);
+
+		return jdbcTemplate.update(sql, map);
+		
+		
+	}
+	
+	
+
+}

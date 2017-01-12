@@ -1,0 +1,77 @@
+RFP_0001_EN= <p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME} has shared the access of RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> with you. You are now able to manage the process of this RFP.</p>
+RFP_0001_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME}和您分享了询价书 <a href="{RFP_CODE_URL}">{RFP_CODE}</a> 的权限，您可以管理该询价书的进程</p>
+
+RFP_0002_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME} has shared the access of RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> with you. You are now able to check the process of this RFP.</p>
+RFP_0002_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME}和您分享了询价书 <a href="{RFP_CODE_URL}">{RFP_CODE}</a> 的权限，您可以查看该询价书的进程</p>
+
+RFP_0003_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> has been deleted by {FROM_FULLNAME}.</p>
+RFP_0003_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">您参与的询价书 <a href="{RFP_CODE_URL}">{RFP_CODE}</a> 已经被 {FROM_FULLNAME} 删除。</p>
+
+RFP_0004_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME} has shared the access of RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> with you. You are now able to manage the process of this RFP.</p>
+RFP_0004_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME}和您分享了<a href="{RFP_CODE_URL}">{RFP_CODE}</a>的权限，您可以管理该询价书的进程。</p>
+
+RFP_0005_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME} has shared the access of RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> with you. You are now able to check the process of this RFP.</p>
+RFP_0005_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">{FROM_FULLNAME}和您分享了<a href="{RFP_CODE_URL}">{RFP_CODE}</a>的详情，您可以查看该询价书的进程。</p>
+
+RFP_0006_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> has been deleted by {FROM_FULLNAME}.</p>
+RFP_0006_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">您参与的询价书<a href="{RFP_CODE_URL}">{RFP_CODE}</a>已经被{FROM_FULLNAME}删除。</p>
+
+RFP_0007_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">You have received RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a> from {FROM_COMPANY}. Please send proposal as soon as possible.</p>
+RFP_0007_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">您收到了来自{FROM_COMPANY}的询价，<a href="{RFP_CODE_URL}">{RFP_CODE}</a>，请尽快报价，提高客户满意度。</p>
+
+RFP_0008_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">You have received {FROM_HOTEL}'s proposal on RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a>.</p>
+RFP_0008_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">您收到了来自{FROM_HOTEL}针对<a href="{RFP_CODE_URL}">{RFP_CODE}</a>的报价。</p>
+
+RFP_0009_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">Your proposal has been declined by the client.</p>
+RFP_0009_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">报价已被客户拒绝。</p>
+
+RFP_00010_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a>: Your price is too high. The client has requested a new proposal. If you wish to win, please send a new proposal in order to have the opportunity to have a one on one negotiation with the client.</p>
+RFP_00010_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">RFP <a href="{RFP_CODE_URL}">{RFP_CODE}</a>: 您的报价过高，客户要求重新报价，如果您希望争取到这个订单，请尽可能提供您最有竞争优势的价格，以争取与客户进行一对一谈判的机会。</p>
+
+RFP_00011_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">You have received a new request on an RFP from the client.</p>
+RFP_00011_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">收到重新报价要求。</p>
+
+RFP_00012_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">Your proposal has entered online negotiation.</p>
+RFP_00012_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">询价书进入与客户线上谈判阶段。</p>
+
+RFP_00013_EN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">Your RFP has been declined by the hotel.</p>
+RFP_00013_CN=<p style="line-height:30px; margin:0 0 10px 0; padding:0;">询价书被酒店拒绝。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

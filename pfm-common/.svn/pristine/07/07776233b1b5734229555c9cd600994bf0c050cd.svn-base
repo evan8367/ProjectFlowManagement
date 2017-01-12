@@ -1,0 +1,37 @@
+package com.sdx.merak.common.email;
+
+import java.util.List;
+
+public interface EmailTaskService2 {
+	
+	/**
+	 * 添加email任务
+	 * @param emailTask
+	 */
+	boolean addTask(EmailTask emailTask);
+	
+	/**
+	 * 获取活动的email任务
+	 * @param bizType @see EmailTaskBizType
+	 * @return
+	 */
+	List<EmailTask> getActivityTask(Integer bizType);
+	
+	/**
+	 * 根据taskId列表冻结email任务
+	 * @param ids
+	 */
+	boolean freezeTask(List<Long> ids);
+	
+	/**
+	 * 根据taskId冻结email任务
+	 * @param ids
+	 */
+	boolean freezeTask(Long id);
+	
+	/**
+	 * 设置为异常task
+	 */
+	boolean setExceptionTask(String email);
+
+}

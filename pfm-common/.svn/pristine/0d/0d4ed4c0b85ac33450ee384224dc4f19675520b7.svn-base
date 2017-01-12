@@ -1,0 +1,26 @@
+package com.sdx.merak.common.email;
+
+/**
+ * 邮件任务发送状态
+ * @author yeegor
+ *
+ */
+public enum EmailTaskStatus {
+	
+	/** 活动任务 **/
+	ACTIVE(0), 
+	/** 冻结 **/
+    FREEZE(1),
+    /** 异常 **/
+    EXCEPTION(2);
+	
+	private final int value;
+	
+	EmailTaskStatus(int value) {
+		this.value = value;
+	}
+
+	public int value() {
+		return value;
+	}
+}

@@ -1,0 +1,40 @@
+package com.sdx.merak.common.sms.dto.req;
+
+/**
+ * 状态报告接口请求
+ * @author Aaron
+ *
+ */
+public class SMSDrReq extends SMSReq {
+
+	private static final long serialVersionUID = 3879289002487270136L;
+	
+	/** 每次取得数量;必须为数字，默认200，可不填 **/
+	private String statusNum; 
+
+	/** 批次编号;可选项，如果传此参数，则只查询该批次的状态 **/
+	private String taskId;
+	
+	public SMSDrReq(SMSReq smsReq) {
+		super.setAccount(smsReq.getAccount());
+		super.setPassword(smsReq.getPassword());
+	}
+
+	public String getStatusNum() {
+		return statusNum;
+	}
+
+	public void setStatusNum(String statusNum) {
+		this.statusNum = statusNum;
+	}
+
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+	
+	
+}

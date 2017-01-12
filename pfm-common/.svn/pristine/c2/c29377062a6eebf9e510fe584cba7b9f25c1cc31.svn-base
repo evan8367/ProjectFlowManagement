@@ -1,0 +1,56 @@
+package com.sdx.merak.common.email;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.sdx.merak.common.dal.DalClient;
+
+public class SystemEmailTaskServiceImpl implements SystemEmailTaskService2 {
+	
+	@Autowired
+	DalClient dalClient;
+
+	@Override
+	public boolean addSysEmailTask(SysEmailTask sysEmailTask) {
+		
+		sysEmailTask.setTaskCount(STEP_ACTION);
+		sysEmailTask.setTaskStatus(EmailTaskStatus.ACTIVE.value());
+		if (sysEmailTask.getErrorType() == null) {
+			sysEmailTask.setErrorType(SystemEmailTemplateType.INNER_EXCEPTION.value());
+		}
+		
+		return dalClient.persist(sysEmailTask)!=null;
+	}
+
+	@Override
+	public List<SysEmailTask> getActivityTask(Integer taskCount) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("taskStatus", EmailTaskStatus.ACTIVE.value());
+		params.put("taskCount", taskCount);
+		
+		params.put("startIndex", 0);
+		params.put("maxCount", 10);
+		
+		List<SysEmailTask> list = dalClient.queryForList("SYS_EMAIL_TASK.SELECT_BY_FIELDS", params, SysEmailTask.class);
+		
+		if (list == null) {
+			list = new ArrayList<SysEmailTask>();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public boolean freezeTask(Long id) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("taskStatus", EmailTaskStatus.FREEZE.value());
+		params.put("id", id);
+		
+		return dalClient.execute("SYS_EMAIL_TASK.UPDATE_BY_KEY", params)>0;
+	}
+
+}

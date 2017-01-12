@@ -1,0 +1,28 @@
+package com.sdx.merak.common.sms.dto.req;
+
+/**
+ * 短信上行接口
+ * @author Aaron
+ *
+ */
+public class SMSMoReq extends SMSReq {
+
+	private static final long serialVersionUID = -2801146914504668113L;
+	
+	/** 每次取得数量;必须为数字，默认200，可不填 **/
+	private String statusNum;
+	
+	public SMSMoReq(SMSReq smsReq) {
+		super.setAccount(smsReq.getAccount());
+		super.setPassword(smsReq.getPassword());
+	}
+
+	public String getStatusNum() {
+		return statusNum;
+	}
+
+	public void setStatusNum(String statusNum) {
+		this.statusNum = statusNum;
+	} 
+	
+}

@@ -1,0 +1,3 @@
+index.path.company=/opt/merak/data/lucene/indexdata/company
+index.path.hotel=/opt/merak/data/lucene/indexdata/hotel
+index.path.user=/opt/merak/data/lucene/indexdata/user

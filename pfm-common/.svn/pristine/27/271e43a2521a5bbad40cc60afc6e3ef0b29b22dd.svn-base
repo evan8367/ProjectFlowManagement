@@ -1,0 +1,18 @@
+package com.sdx.merak.common.email;
+
+
+/**
+ * 添加email任务
+ * 外部调用接口
+ * @author yeegor
+ *
+ */
+public interface SendEmailComponet2 {
+
+	boolean addEmailTask(EmailTask emailTask);
+	
+	boolean addSystemEmailTask(SysEmailTask sysEmailTask);
+	
+	boolean addSystemEmailTask(String serverIP, String exceptionInfo, String parameterInfo);
+	
+}

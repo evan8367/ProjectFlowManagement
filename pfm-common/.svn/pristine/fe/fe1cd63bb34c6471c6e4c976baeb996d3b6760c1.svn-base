@@ -1,0 +1,12 @@
+#auth code channel
+sms.url.chanzor.authCodeChannel.account = 989db6
+sms.url.chanzor.authCodeChannel.password = E36033614F37EF3866C43FE0E2AAA677
+
+#business notification channel
+sms.url.chanzor.businessNotificationChannel.account = 989e24
+sms.url.chanzor.businessNotificationChannel.password = FEF72CE43527FDB5526DEAA539943226
+
+sms.url.chanzor.send = http://api.chanzor.com/send
+sms.url.chanzor.overage = http://api.chanzor.com/overage
+sms.url.chanzor.dr = http://api.chanzor.com/dr
+sms.url.chanzor.mo = http://api.chanzor.com/mo

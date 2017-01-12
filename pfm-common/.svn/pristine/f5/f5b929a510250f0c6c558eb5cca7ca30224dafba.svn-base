@@ -1,0 +1,68 @@
+package com.sdx.merak.common.sms.dto.resp;
+
+import java.io.Serializable;
+
+/**
+ * 2.1	短信发送接口返回
+ * @author Aaron
+ */
+public class SMSSendResp implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	/** 数字类型，0表示成功，其它为失败，错误信息通过desc描述。 **/
+	private Integer status;
+	
+	/** 发送结果状态操作说明  **/
+	private String desc;
+	
+	/** 提交短信的任务批次 **/
+	private String taskId;
+	
+	/** 当前账户的余额 **/
+	private Integer overage;
+	
+	/** 成功的号码数量 **/
+	private Integer mobileCount;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+
+	public Integer getOverage() {
+		return overage;
+	}
+
+	public void setOverage(Integer overage) {
+		this.overage = overage;
+	}
+
+	public Integer getMobileCount() {
+		return mobileCount;
+	}
+
+	public void setMobileCount(Integer mobileCount) {
+		this.mobileCount = mobileCount;
+	}
+	
+}

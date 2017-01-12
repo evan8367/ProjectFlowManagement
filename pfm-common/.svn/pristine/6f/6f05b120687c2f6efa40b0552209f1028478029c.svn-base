@@ -1,0 +1,48 @@
+package com.sdx.merak.common.sms.dto.resp;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 2.3	状态报告接口返回
+ * @author Aaron
+ *
+ */
+public class SMSDrResp implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	/** 数字类型，0表示成功，其它为失败，参见最后的错误代码表。 **/
+	private Integer status;
+	
+	/** 结果状态操作说明 **/
+	private String desc;
+	
+	/** 状态报告列表 **/
+	private List<SMSDrItemResp> drList;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public List<SMSDrItemResp> getDrList() {
+		return drList;
+	}
+
+	public void setDrList(List<SMSDrItemResp> drList) {
+		this.drList = drList;
+	} 
+	
+}

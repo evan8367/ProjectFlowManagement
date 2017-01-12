@@ -1,0 +1,16 @@
+package com.sdx.merak.common.email;
+
+/**
+ * 发送邮件拦截
+ * @author yeegor
+ *
+ */
+public interface InterceptSendEmail {
+	
+	void beforeSendEmail();
+	
+	void afterSendEmailSuccess();
+	
+	void afterSendEmailFailed();
+
+}

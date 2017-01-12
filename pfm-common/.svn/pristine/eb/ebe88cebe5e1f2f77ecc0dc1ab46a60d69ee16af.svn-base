@@ -1,0 +1,165 @@
+package com.sdx.merak.common.hazelcast;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.hazelcast.config.Config;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.hazelcast.core.ISet;
+import com.hazelcast.core.ITopic;
+import com.hazelcast.core.LifecycleEvent;
+import com.hazelcast.core.LifecycleListener;
+import com.hazelcast.core.MemberAttributeEvent;
+import com.hazelcast.core.MembershipEvent;
+import com.hazelcast.core.MembershipListener;
+import com.sdx.merak.common.config.Hazelcast3PathXmlConfig;
+
+/**
+ * DistributedCache 4 hazelcast
+ * @author yeegor
+ *
+ */
+public class DistributedCache {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DistributedCache.class);
+	
+	private static final DistributedCache cache = new DistributedCache();
+	
+	private HazelcastInstance hazelcast;
+	
+	/** 会话缓存 
+	 * k - session hashcode
+	 * v - httpSession
+	 */
+	private IMap<Integer, String> oldLoginIds;
+	private IMap<String, String> loginServerMapping;
+	
+	private ISet<String> loginIdSet;
+	
+	private ITopic<KickUser> kickUserTopic;
+	
+	/** 其他缓存 **/
+	private IMap<String, String> modifyPasswordToken;
+	
+	private IMap<String, String> hotelListMerge; //搜索页酒店列表合并缓存
+	
+	private IMap<String, String> authorityDataCache; //权限缓存
+	
+	/** 服务器数量 **/
+	private AtomicInteger serverCount;
+	
+	class ClusterListener implements LifecycleListener, MembershipListener {
+		
+		@Override
+		public void memberAdded(MembershipEvent membershipEvent) {
+			LOGGER.info("ClusterListener|memberAdded, left serverCount is " + serverCount.incrementAndGet());
+		}
+
+		@Override
+		public void memberRemoved(MembershipEvent membershipEvent) {
+			LOGGER.info("ClusterListener|memberRemoved, left serverCount is " + serverCount.decrementAndGet());
+		}
+
+		@Override
+		public void stateChanged(LifecycleEvent event) {
+			serverCount.set(hazelcast.getCluster().getMembers().size());
+			LOGGER.info("ClusterListener|stateChanged, left serverCount is " + serverCount.get());
+		}
+
+		@Override
+		public void memberAttributeChanged(
+				MemberAttributeEvent memberAttributeEvent) {
+			LOGGER.debug("ClusterListener|memberAttributeChanged.");
+		}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private DistributedCache() {
+		LOGGER.info("DistributedCache init");
+		//hazelcast启动
+		Config config = new Hazelcast3PathXmlConfig();
+        hazelcast = Hazelcast.newHazelcastInstance(config);
+        //缓存初始化
+        oldLoginIds = (IMap<Integer, String>) createCache("oldLoginIds");
+        loginServerMapping = (IMap<String, String>)createCache("loginServerMapping");
+        
+        loginIdSet = (ISet<String>) createSet("loginIdSet");
+        
+        kickUserTopic = hazelcast.getTopic("kickUserTopic");
+        
+        modifyPasswordToken = (IMap<String, String>) createCache("modifyPasswordToken");
+        
+        hotelListMerge = (IMap<String, String>) createCache("hotelListMerge");
+        
+        authorityDataCache = (IMap<String, String>) createCache("authorityDataCache");
+        
+		//初始获取服务器集群数量
+		serverCount = new AtomicInteger(hazelcast.getCluster().getMembers().size());
+		hazelcast.getCluster().addMembershipListener(new ClusterListener());
+	}
+	
+	/**
+	 * generate DistributedCache single instance
+	 * @return DistributedCache
+	 */
+	public static DistributedCache single() {
+		return cache;
+	}
+	
+	/**
+	 * create distributed map
+	 * @param cacheName
+	 * @return IMap
+	 */
+    IMap<?, ?> createCache(String cacheName) {
+		return hazelcast.getMap(cacheName);
+	}
+	
+    ISet<?> createSet(String setName) {
+    	return hazelcast.getSet(setName);
+    }
+	
+	public HazelcastInstance getHazelcast() {
+		return hazelcast;
+	}
+
+	public IMap<Integer, String> getOldLoginIdsCache() {
+		return oldLoginIds;
+	}
+	
+	public IMap<String, String> getLoginServerMappingCache() {
+		return loginServerMapping;
+	}
+
+	public ISet<String> getLoginIdSet() {
+		return loginIdSet;
+	}
+
+	public ITopic<KickUser> getKickUserTopic() {
+		return kickUserTopic;
+	}
+
+	/** 获取服务器数量 **/
+	public AtomicInteger getServerCount() {
+		return serverCount;
+	}
+
+	public IMap<String, String> getModifyPasswordToken() {
+		return modifyPasswordToken;
+	}
+
+	public IMap<String, String> getHotelListMerge() {
+		return hotelListMerge;
+	}
+
+	public IMap<String, String> getAuthorityDataCache() {
+		return authorityDataCache;
+	}
+	
+	
+}

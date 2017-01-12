@@ -1,0 +1,71 @@
+package com.sdx.merak.common.sms.dto.resp;
+
+import java.io.Serializable;
+
+/**
+ * 2.2	余额及发送量查询接口返回
+ * @author Aaron
+ *
+ */
+public class SMSOverageResp implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	/** 结果码-数字类型，0表示成功，其它为失败，参见最后的错误代码表。 **/
+	private Integer status;
+	
+	/** 说明-结果状态操作说明 **/
+	private String desc;
+	
+	/** 当前余额-当前账户的余额(剩余短信条数)**/
+	private Integer overage;
+	
+	/** 付费类型-预付、后付 **/
+	private String payInfo;
+	
+	/** 发送数-已发送总数 **/
+	private Integer chargeCount;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public Integer getOverage() {
+		return overage;
+	}
+
+	public void setOverage(Integer overage) {
+		this.overage = overage;
+	}
+
+	public String getPayInfo() {
+		return payInfo;
+	}
+
+	public void setPayInfo(String payInfo) {
+		this.payInfo = payInfo;
+	}
+
+	public Integer getChargeCount() {
+		return chargeCount;
+	}
+
+	public void setChargeCount(Integer chargeCount) {
+		this.chargeCount = chargeCount;
+	}
+	
+	
+
+}

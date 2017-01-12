@@ -1,0 +1,3 @@
+img.host=/image/
+download.host=http://127.0.0.1:82
+download.distribute.host=http://192.168.100.9/

@@ -1,0 +1,42 @@
+package com.sdx.merak.common.redis.dto;
+
+public class CacheException extends RuntimeException{
+    private static final long serialVersionUID = -3012978976998075635L;
+    private String code;
+
+    public CacheException() {
+        super();
+
+    }
+
+    public CacheException(String message, String code, Throwable cause) {
+        super(message, cause);
+        this.code = code;
+    }
+
+    public CacheException(String message, String code) {
+        super(message);
+        this.code = code;
+    }
+
+    public CacheException(String message, Throwable cause) {
+        super(message, cause);
+
+    }
+
+    public CacheException(String message) {
+        super(message);
+    }
+
+    public CacheException(Throwable cause) {
+        super(cause);
+
+    }
+
+    /**
+     * @return the code
+     */
+    public String getCode() {
+        return code;
+    }
+}

@@ -1,0 +1,29 @@
+package com.sdx.merak.common.hazelcast;
+
+import java.io.Serializable;
+
+public class KickUser implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private String loginId;
+	
+	private String serverIp;
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getServerIp() {
+		return serverIp;
+	}
+
+	public void setServerIp(String serverIp) {
+		this.serverIp = serverIp;
+	}
+	
+}

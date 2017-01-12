@@ -1,0 +1,18 @@
+mail.smtp.host = smtp.exmail.qq.com
+server = https://www.merak.com
+modifyPasswordUrl = /web/contact/modifyPassword.html
+requestInvitationUrl = /web/login.html?requestInvitation=1
+
+messageRfpUrl = /web/message/messageContent.html?todoMsgId={messageId}
+loginUrl = /web/login.html
+
+email.task.bbc = dc@merak.com
+email.task.relation.rfp = rfp@merak.com
+
+email.task.admin.notification.auth = x@merak.com,j@merak.com,r@merak.com,t@merak.com,cwu@merak.com,wjin@merak.com,bw@merak.com,dc@merak.com,ej@merak.com,al@merak.com,mw@merak.com,alam@merak.com,szhu@merak.com,rli@merak.com,ayang@merak.com,cmo@merak.com 
+
+email.task.rfp.cc = rfp@merak.com
+
+environment=PRD
+
+email.task.rfp.thirdpartadmin =r@merak.com,j@merak.com,dc@merak.com,tw@merak.com,bw@merak.com

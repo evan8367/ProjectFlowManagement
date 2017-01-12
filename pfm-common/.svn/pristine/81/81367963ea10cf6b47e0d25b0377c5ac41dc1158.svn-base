@@ -1,0 +1,158 @@
+package com.sdx.merak.common.redis;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
+public interface RedisClient {
+	
+	
+	/**
+	 * 设置value为string类型数据
+	 * @param key
+	 * @param value
+	 */
+	public void setString(String key , String value) ;
+	
+	/**
+	 *  查询value为string类型数据
+	 * @param key
+	 * @return
+	 */
+	public String getString(String key ) ;
+	
+	
+	/**
+	 * 删除缓存数据
+	 * @param keys
+	 */
+	public void delete(List<String> keys) ;
+	
+	/**
+	 * 删除缓存数据
+	 * @param key
+	 */
+	public void delete(String key ) ;
+	
+	
+	/**
+	 * 缓存对象
+	 * @param key
+	 * @param value
+	 */
+	public<T> void setObject(String key , T value) ;
+	
+	
+	/**
+	 * hash方式缓存数据
+	 * @param key
+	 * @param filed
+	 * @param value
+	 */
+	public<T> void setHash(String key ,String filed, T value)  ;
+	
+	/**
+	 * 	/**
+	 * hash方式缓存数据
+	 * @param key
+	 * @param filed
+	 * @param value
+	 */
+	public<T> void setHash(String key ,Map<String , T> values)  ;
+	
+	
+	
+	/**
+	 * 获取hash方式数据
+	 * @param key
+	 * @param file
+	 * @return
+	 */
+	public<T>  T getHash(String key , String filed) ;
+	
+	/**
+	 * 获取hash方式数据
+	 * @param key
+	 * @return
+	 */
+	public<T>  Map<String , T> getHash(String key ) ;
+	
+	
+	/**
+	 * 获取对象
+	 * @param key
+	 * @param T
+	 * @return
+	 */
+	public<T> T getObject(String key );
+	
+	/**
+	 * 缓存list类型数据
+	 * @param key
+	 * @param list
+	 */
+	public<T> void setList(String key , List<T> list) ;
+	
+	/**
+	 * 查询list类型缓存数据数据
+	 * @param key
+	 * @param list
+	 */
+	public<T> List<T> getList(String key ) ;
+	
+	/**
+	 * 查询list类型缓存数据数据
+	 * @param key
+	 * @param index
+	 * @return
+	 */
+	public<T> T getList(String key  , long index) ;
+	
+	
+	
+	/**
+	 * 设置失效时间 ，单位秒
+	 * @param key
+	 * @param time
+	 */
+	public void expire(String key,long time) ;
+	
+	/**
+	 * 
+	 * @param key
+	 * @param date
+	 */
+	public void expire(String key,Date date) ;
+	
+	/**
+	 * 〈功能简述〉<br> 
+	 * 〈详细描述〉<br> 
+	 *
+	 * @param key
+	 * @return
+	 */
+	Long ttl(String key);
+	
+	Long incr(String key, long step);
+	
+	<T> Long addKeySet(String key, T t);
+	
+	Set<Object> getSet(String key);
+	
+    boolean isExistsKey(String key);
+    
+    /**
+     * 根据多个key一次性批量查询
+     * <br>
+     * 批量执行，减少RPC损耗
+     * <br>
+     * <font color="red">已测试通过,怕的别用:p</font>
+     * @param keys
+     * @return 返回 V-List
+     */
+    <T> List<T> getList(List<String> keys);
+}
+
+

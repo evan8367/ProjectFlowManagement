@@ -1,0 +1,60 @@
+package com.sdx.merak.common.sms.dto.req;
+
+/**
+ * 发送短信
+ * 
+ * @author Aaron
+ */
+public class SMSSendReq extends SMSReq {
+
+	private static final long serialVersionUID = 795175474274605052L;
+	/** 全部被叫号码 - 短信发送的目的号码.多个号码之间用半角逗号隔开 **/
+	private String mobile;
+	/**
+	 * 发送短信内容-短信的内容，内容需要UTF-8编码，提交内容格式：内容+【签名】。签名是公司的名字或者公司项目名称。示例：您的验证码：1439【
+	 * 畅卓科技】。【】是签名的标识符。请按照报备的模板进行提交测试，如发送与模板不一样的内容将会进入人工审核，信息将无法及时正常接收。
+	 **/
+	private String content;
+	/** 为空表示立即发送，定时发送格式2010-10-24 09:08:10 **/
+	private String sendTime;
+	/** 扩展子号 - 请先询问配置的通道是否支持扩展子号，如果不支持，请填空。子号只能为数字，且最多5位数。 **/
+	private String extno;
+
+	public SMSSendReq(SMSReq smsReq) {
+		super.setAccount(smsReq.getAccount());
+		super.setPassword(smsReq.getPassword());
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(String sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	public String getExtno() {
+		return extno;
+	}
+
+	public void setExtno(String extno) {
+		this.extno = extno;
+	}
+
+}

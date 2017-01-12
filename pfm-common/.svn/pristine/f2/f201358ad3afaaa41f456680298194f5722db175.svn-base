@@ -1,0 +1,130 @@
+package com.sdx.merak.common.sms;
+
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.sdx.merak.common.sms.dto.SMSChannel;
+import com.sdx.merak.common.sms.dto.req.SMSDrReq;
+import com.sdx.merak.common.sms.dto.req.SMSMoReq;
+import com.sdx.merak.common.sms.dto.req.SMSOverageReq;
+import com.sdx.merak.common.sms.dto.req.SMSReq;
+import com.sdx.merak.common.sms.dto.req.SMSSendReq;
+
+/**
+ * SMS参数组装
+ * @author Aaron
+ */
+
+@Component
+public class SMSReqUtil {
+	
+	private SMSSendReq smsAuthCodeSendReq;
+	private SMSOverageReq smsAuthCodeOverageReq;
+	private SMSDrReq smsAuthCodeDrReq;
+	private SMSMoReq smsAuthCodeMoReq;
+	
+	private SMSSendReq smsBusinessNotificationSendReq;
+	private SMSOverageReq smsBusinessNotificationOverageReq;
+	private SMSDrReq smsBusinessNotificationDrReq;
+	private SMSMoReq smsBusinessNotificationMoReq;
+	
+	@Autowired
+	Properties properties;
+	
+	@PostConstruct
+	private void init() {
+		String authCodeAccount = properties.getProperty("sms.url.chanzor.authCodeChannel.account");
+		String authCodePassword = properties.getProperty("sms.url.chanzor.authCodeChannel.password");
+		
+		String businessNotificationAccount = properties.getProperty("sms.url.chanzor.businessNotificationChannel.account");
+		String businessNotificationPassword = properties.getProperty("sms.url.chanzor.businessNotificationChannel.password");
+		
+		String smsSendReqUrl = properties.getProperty("sms.url.chanzor.send");
+		String smsOverageReqUrl = properties.getProperty("sms.url.chanzor.overage");
+		String smsDrReqUrl = properties.getProperty("sms.url.chanzor.dr");
+		String smsMoReqUrl = properties.getProperty("sms.url.chanzor.mo");
+		
+		SMSReq smsAuthCodeReq = new SMSReq();
+		SMSReq smsBusinessNotificationReq = new SMSReq();
+		
+		smsAuthCodeReq.setAccount(authCodeAccount);
+		smsAuthCodeReq.setPassword(authCodePassword);
+		smsBusinessNotificationReq.setAccount(businessNotificationAccount);
+		smsBusinessNotificationReq.setPassword(businessNotificationPassword);
+		
+		/** 验证码通道 begin **/
+		smsAuthCodeSendReq = new SMSSendReq(smsAuthCodeReq);
+		smsAuthCodeSendReq.setReqUrl(smsSendReqUrl);
+		
+		smsAuthCodeOverageReq = new SMSOverageReq(smsAuthCodeReq);
+		smsAuthCodeOverageReq.setReqUrl(smsOverageReqUrl);
+		
+		smsAuthCodeDrReq = new SMSDrReq(smsAuthCodeReq);
+		smsAuthCodeDrReq.setReqUrl(smsDrReqUrl);
+		
+		smsAuthCodeMoReq = new SMSMoReq(smsAuthCodeReq);
+		smsAuthCodeMoReq.setReqUrl(smsMoReqUrl);
+		/** 验证码通道 end **/
+		
+		/** 业务通知类通道 begin **/
+		smsBusinessNotificationSendReq = new SMSSendReq(smsAuthCodeReq);
+		smsBusinessNotificationSendReq.setReqUrl(smsSendReqUrl);
+		
+		smsBusinessNotificationOverageReq = new SMSOverageReq(smsAuthCodeReq);
+		smsBusinessNotificationOverageReq.setReqUrl(smsOverageReqUrl);
+		
+		smsBusinessNotificationDrReq = new SMSDrReq(smsBusinessNotificationReq);
+		smsBusinessNotificationDrReq.setReqUrl(smsDrReqUrl);
+		
+		smsBusinessNotificationMoReq = new SMSMoReq(smsBusinessNotificationReq);
+		smsBusinessNotificationMoReq.setReqUrl(smsMoReqUrl);
+		/** 业务通知类通道 end **/
+	}
+	
+	public SMSSendReq getSMSSendReq(SMSChannel smsChannel) {
+		
+		if (null == smsChannel) {
+			return null;
+		}
+		if (smsChannel == SMSChannel.AUTH_CODE_CHANNEL) {
+			return smsAuthCodeSendReq;
+		}
+		
+		return smsBusinessNotificationSendReq;
+	}
+	public SMSOverageReq getSMSOverageReq(SMSChannel smsChannel) {
+		if (null == smsChannel) {
+			return null;
+		}
+		if (smsChannel == SMSChannel.AUTH_CODE_CHANNEL) {
+			return smsAuthCodeOverageReq;
+		}
+		
+		return smsBusinessNotificationOverageReq;
+	}
+	public SMSDrReq getSMSDrReq(SMSChannel smsChannel) {
+		if (null == smsChannel) {
+			return null;
+		}
+		if (smsChannel == SMSChannel.AUTH_CODE_CHANNEL) {
+			return smsAuthCodeDrReq;
+		}
+		
+		return smsBusinessNotificationDrReq;
+	}
+	public SMSMoReq getSMSMoReq(SMSChannel smsChannel) {
+		if (null == smsChannel) {
+			return null;
+		}
+		if (smsChannel == SMSChannel.AUTH_CODE_CHANNEL) {
+			return smsAuthCodeMoReq;
+		}
+		
+		return smsBusinessNotificationMoReq;
+	}
+
+}

@@ -1,0 +1,17 @@
+package com.sdx.merak.common.email;
+
+
+/**
+ * 相同系统异常内容的邮件发送规则
+ * @author yeegor
+ *
+ */
+public interface SysEmailSendRule2 {
+	
+	boolean addSysEmailTaskOnRule(SysEmailTask task);
+	
+	Integer getNext(int step);
+	
+	boolean updateNextStatus(SysEmailTask task);
+
+}

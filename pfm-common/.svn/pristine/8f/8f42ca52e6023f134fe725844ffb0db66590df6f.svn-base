@@ -1,0 +1,238 @@
+package com.sdx.merak.common.redis;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.stereotype.Service;
+
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+
+@SuppressWarnings("unchecked")
+@Service
+public class RedisClientImpl implements RedisClient {
+
+	@SuppressWarnings("rawtypes")
+    @Autowired
+	RedisTemplate redisTemplate;
+	
+	@Resource(name = "redisTemplate")
+    ValueOperations<String, Object> vOps;
+	
+	@Resource(name = "redisTemplate")
+	SetOperations<String,Object> sOps;
+
+//	@PostConstruct
+//	private void init() {
+//		redisTemplate.setEnableTransactionSupport(true);
+//	}
+	
+	@Override
+	public void setString(String key, String value) {
+
+		ValueOperations<String, String> valueOperation = redisTemplate.opsForValue();
+
+		valueOperation.set(key, value);
+		
+	}
+
+	@Override
+	public String getString(String key) {
+
+		ValueOperations<String, String> valueOperation = redisTemplate.opsForValue();
+		String value = valueOperation.get(key);
+
+		
+		return value;
+	}
+
+	public <T> void setObject(String key, T value) {
+
+		ValueOperations<String, T> valueOperation = redisTemplate.opsForValue();
+
+		valueOperation.set(key, value);
+	}
+
+	public <T> T getObject(String key) {
+
+		ValueOperations<String, T> valueOperation = redisTemplate.opsForValue();
+		T value = valueOperation.get(key);
+
+		return value;
+	}
+	
+	public<T> void setHash(String key ,String filed, T value) 
+	{
+		HashOperations<String , String , T> hashOperations = redisTemplate.opsForHash() ;
+		
+		hashOperations.put(key, filed, value);
+		
+		
+	}
+	
+	public<T> void setHash(String key ,Map<String , T> values)  
+	{
+		
+		HashOperations<String , String , T> hashOperations = redisTemplate.opsForHash() ;
+		
+		hashOperations.putAll(key, values );
+	}
+	
+	public<T>  T getHash(String key , String file)
+	{
+		
+		HashOperations<String , String , T> hashOperations = redisTemplate.opsForHash() ;
+		
+		return hashOperations.get(key, file) ;
+		
+	}
+	
+	public<T>  Map<String , T> getHash(String key ) 
+	{
+		
+		HashOperations<String , String , T> hashOperations = redisTemplate.opsForHash() ;
+		
+		return hashOperations.entries(key) ;
+		
+	}
+
+	public void delete(List<String> keys) {
+		redisTemplate.delete(keys);
+	}
+
+	public void delete(String key) {
+
+		List<String> keys = new ArrayList<String>();
+
+		keys.add(key);
+
+		redisTemplate.delete(keys);
+	}
+
+	public void expire(String key, long time) {
+
+		redisTemplate.expire(key, time, TimeUnit.SECONDS);
+
+	}
+
+	public void expire(String key, Date date) {
+		redisTemplate.expireAt(key, date);
+	}
+	
+	
+	public<T> void setList(String key , List<T> list)
+	{
+		redisTemplate.delete(key);
+		
+		ListOperations<String , T> operations = redisTemplate.opsForList() ;
+		
+		operations.leftPushAll(key, list) ;
+	}
+	
+	public<T> List<T> getList(String key ) 
+	{
+		
+		ListOperations<String , T> operations = redisTemplate.opsForList() ;
+		
+		
+		List<T> list = operations.range(key, 0, operations.size(key)) ;
+		
+		return list ;
+	}
+	
+	public<T> T getList(String key  , long index) 
+	{
+		
+		ListOperations<String , T> operations = redisTemplate.opsForList() ;
+		
+		return operations.index(key, index) ;
+	}
+	
+	public Long ttl(String key) {
+	    return redisTemplate.getExpire(key);
+	}
+
+	@Override
+	public Long incr(String key, long step) {
+		return vOps.increment(key, step);
+	}
+
+	@Override
+	public<T> Long addKeySet(String key, T t) {
+		return sOps.add(key, t);
+	}
+
+	@Override
+	public Set<Object> getSet(String key) {
+		return sOps.members(key);
+	}
+
+	@Override
+	public boolean isExistsKey(final String key) {
+		if (StringUtils.isBlank(key)) {
+			return false;
+		}
+		
+	   Boolean result = (Boolean) redisTemplate.execute(new RedisCallback<Boolean>() {
+			@Override
+			public Boolean doInRedis(RedisConnection connection)
+					throws DataAccessException {
+				return connection.exists(key.getBytes());
+			}
+		});
+	   
+	   return null!=result && result.booleanValue();
+	}
+
+	@Override
+	public<T> List<T> getList(final List<String> keys) {
+		
+		if (CollectionUtils.isEmpty(keys)) {
+			return Lists.newArrayList();
+		}
+		
+		List<T> list = redisTemplate.executePipelined(new RedisCallback<List<Object>>() {
+			@Override
+			public List<Object> doInRedis(RedisConnection connection)
+					throws DataAccessException {
+    			RedisSerializer<String> keySerializer = redisTemplate.getStringSerializer();
+			    for (String key : keys) {
+			        final byte[] rawKey = keySerializer.serialize(key);
+			        connection.get(rawKey);
+			    }
+				return null;
+			}
+
+		});
+		
+		if (null == list) {
+			return Lists.newArrayList();
+		}
+		Collection<T> collection = Collections2.filter(list, Predicates.notNull());
+		List<T> result = Lists.newArrayList();
+		if(!collection.isEmpty()){
+		    result.addAll(collection);
+		}
+		return result;
+	}
+}

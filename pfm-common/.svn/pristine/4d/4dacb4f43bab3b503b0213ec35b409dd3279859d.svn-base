@@ -1,0 +1,65 @@
+package com.sdx.merak.common.email;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sdx.merak.common.dal.DalClient;
+
+public class SysEmailSendRuleImpl implements SysEmailSendRule2 {
+	
+	@Autowired
+	DalClient dalClient;
+	
+	@Autowired
+	SystemEmailTaskService2 SystemEmailTaskService22;
+
+	@Override
+	@Transactional
+	public boolean addSysEmailTaskOnRule(SysEmailTask task) {
+		if (task == null) {
+			return false;
+		}
+		//查询是否存在相同异常的任务
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("exceptionInfo", task.getExceptionInfo());
+		params.put("errorType", task.getErrorType());
+		SysEmailTask sysEmailTask = dalClient.queryForObject("SYS_EMAIL_TASK.SELECT_TASK_ACTIVE_RULE", params, SysEmailTask.class);
+		
+		if (sysEmailTask == null) {
+			return SystemEmailTaskService22.addSysEmailTask(task);
+		}
+		
+		//存在时更新任务状态
+		return updateNextStatus(sysEmailTask);
+	}
+	
+	@Override
+	public Integer getNext(int step) {
+		if (step == SystemEmailTaskService2.STEP_ACTION) {
+			return SystemEmailTaskService2.ONE_STEP_COUNT;
+		} else if (step == SystemEmailTaskService2.ONE_STEP_COUNT) {
+			return SystemEmailTaskService2.TWO_STEP_COUNT;
+		} else if (step == SystemEmailTaskService2.TWO_STEP_COUNT) {
+			return SystemEmailTaskService2.THREE_STEP_COUNT;
+		} 
+		return SystemEmailTaskService2.NO_STEP;
+	}
+
+	@Override
+	public boolean updateNextStatus(SysEmailTask task) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		Long id = task.getId();
+		params.put("id", id);
+		if (getNext(task.getTaskCount()) == SystemEmailTaskService2.NO_STEP) {
+			params.put("taskStatus", EmailTaskStatus.FREEZE.value());
+		} else {
+			params.put("taskStatus", EmailTaskStatus.ACTIVE.value());
+		}
+		
+		return dalClient.execute("SYS_EMAIL_TASK.INCREAM_TASK_COUNT_BY_KEY", params)>0;
+	}
+
+}

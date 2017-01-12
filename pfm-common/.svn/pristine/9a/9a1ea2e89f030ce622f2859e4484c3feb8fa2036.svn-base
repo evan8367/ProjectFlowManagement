@@ -1,0 +1,220 @@
+package com.sdx.merak.common.redis;
+
+public class RedisKeyManager {
+	
+	
+	private static final String LOGIN_RECORD = "LOGIN_RECORD_PRE_"  ;
+	
+	private static final String LOGIN_WEB_RECORD = "LOGIN_RECORD_WEB_PRE_"  ;
+	
+	/**
+	 * 后台授权登录时添加token
+	 */
+	private static final String LOGIN_ADMIN_TOKEN_RECORD = "LOGIN_ADMIN_TOKEN_PRE_"  ;
+	
+	private static final String LOGIN_TOKEN = "LOGIN_TOKEN_PRE_" ;
+	
+	private static final String SERVER_URL = "SERVER_URL_FOR_APP" ;
+	
+	private static final String MEETING_NAME_SEQ = "MEETING_NAME_SEQ_" ;
+	
+	private static final String SUB_ACCOUNT_TOKEN_KEY = "SUB_ACCOUNT_TOKEN_KEY_"; //子账号token key
+	
+	private static final String SUB_ACCOUNT_LOGIN_DTO_KEY = "SUB_ACCOUNT_LOGIN_DTO_KEY_"; //子账号登陆对象key
+	
+	private static final String SUB_ACCOUNT_LOGIN_SMS_PASSWORD_KEY = "SUB_ACCOUNT_LOGIN_SMS_PASSWORD_KEY_"; //子账号短信登陆密码key
+	
+	private static final String MERAK_ACCOUNT_SMS_BIND_PRIVATE_MOBILE_NUMBER_KEY = "MERAK_ACCOUNT_SMS_BIND_PRIVATE_MOBILE_NUMBER_KEY_"; //Merak账号发起绑定手机号短信key
+	
+	private static final String MERAK_ACCOUNT_SMS_UNBIND_PRIVATE_MOBILE_NUMBER_KEY = "MERAK_ACCOUNT_SMS_UNBIND_PRIVATE_MOBILE_NUMBER_KEY_"; //Merak账号发起解绑手机号短信key
+	
+	private static final String SUB_ACCOUNT_SMS_UNBIND_PRIVATE_MOBILE_NUMBER_KEY = "SUB_ACCOUNT_SMS_UNBIND_PRIVATE_MOBILE_NUMBER_KEY_"; //子账号发起解绑手机号短信key
+	
+	private static final String RANK_MANUAL_SORT_KEY = "RANK_MANUAL_SORT_RULE_KEY_"; //人工干预排序规则
+	
+	private static final String RANK_MANUAL_SORT_ALL_CONTACT_ID_KEY = "RANK_MANUAL_SORT_ALL_CONTACT_ID_KEY"; //所有人工排序的contactId List
+	
+	/** merak vip begin **/
+	private static final String MERAK_VIP_DIMENSION_CONFIG_KEY = "MERAK_VIP_DIMENSION_CONFIG_KEY_";  //Merak Vip维度配置,对应rfpId列表值
+	private static final String MERAK_VIP_DIMENSION_CONFIG_CACHE_KEY = "MERAK_VIP_DIMENSION_CONFIG_CACHE_KEY_";  //Merak Vip维度配置，对应缓存对象值
+	private static final String MERAK_VIP_DIMENSION_CONFIG_ALL_EVENT_IDS_KEY = "MERAK_VIP_DIMENSION_CONFIG_ALL_EVENT_IDS_KEY";  //Merak Vip配置所有eventId
+	private static final String MERAK_VIP_DIMENSION_CONFIG_EVENT_ID_KEY = "MERAK_VIP_DIMENSION_CONFIG_EVENT_ID_KEY_"; //Merak Vip 对应的eventId配置
+	private static final String MERAK_VIP_DIMENSION_DEFAULT_GLOBAL_CONFIG_KEY = "MERAK_VIP_DIMENSION_DEFAULT_GLOBAL_CONFIG_KEY_";  //Merak Vip全局默认配置,对应开关 key_{companyId}
+	private static final String MERAK_VIP_DIMENSION_MODIFY_DEFAULT_GLOBAL_CONFIG_PERMISSION_KEY = "MERAK_VIP_DIMENSION_MODIFY_DEFAULT_GLOBAL_CONFIG_PERMISSION_KEY_";  //是否允许修改Merak Vip全局默认配置,对应开关,key_{companyId}
+	private static final String MERAK_VIP_EVENT_BUSINESS_HOTEL_SESSION_KEY = "MERAK_VIP_EVENT_BUSINESS_HOTEL_SESSION_KEY_";//event业务(酒店)用户会话key
+	private static final String MERAK_VIP_EVENT_BUSINESS_CURRENT_THREAD_CONTEXT = "MERAK_VIP_EVENT_BUSINESS_CURRENT_THREAD_CONTEXT_";//线程上下文
+	/** merak vip end **/
+	
+	/**
+	 * 登录记录缓存key
+	 * @param userId
+	 * @return
+	 */
+	public static String getLoginRecordKey(Long userId) 
+	{
+		
+		String key = LOGIN_RECORD+ userId  ;
+		
+		return key ;
+	}
+	
+	/**
+	 * web登录记录缓存key
+	 * @param userId
+	 * @return
+	 */
+	public static String getWebLoginRecordKey(Long userId) 
+	{
+		
+		String key = LOGIN_WEB_RECORD+ userId  ;
+		
+		return key ;
+	}
+	
+	/**
+	 * 后台授权登录缓存key
+	 * @param userId
+	 * @return
+	 */
+	public static String getWebLoginAdminTokenKey(Long userId) 
+	{
+		
+		String key = LOGIN_ADMIN_TOKEN_RECORD+ userId  ;
+		
+		return key ;
+	}
+	
+	
+	
+	
+	/**
+	 * token缓存key
+	 * @param token
+	 * @return
+	 */
+	public static String getLoginTokenKey(String token)
+	{
+
+	
+		String key = LOGIN_TOKEN + token  ;
+		
+		return key ;
+	
+	}
+	
+	
+	public static String getServerUrlKey()
+	{
+		
+		return SERVER_URL ;
+	
+	}
+	
+	public static String getMeetingNameSeq(Long eventId, Integer type) {
+
+		return MEETING_NAME_SEQ + eventId + "_" + type;
+
+	}
+	
+
+	public static String getSubAccountTokenKey(String privateMobileNumber) {
+		
+		String key = SUB_ACCOUNT_TOKEN_KEY + privateMobileNumber  ;
+		
+		return key ;
+	}
+	
+	public static String getSubAccountLoginDTOKey(String token) {
+		
+		String key = SUB_ACCOUNT_LOGIN_DTO_KEY + token  ;
+		
+		return key ;
+	}
+	
+	public static String getSubAccountLoginSMSPasswordKey(String mobileNumber) {
+		
+		String key = SUB_ACCOUNT_LOGIN_SMS_PASSWORD_KEY + mobileNumber  ;
+		
+		return key ;
+	}
+	
+	public static String getMerakAccountSMSBindPrivateMobileNumberKey(String mobileNumber) {
+		
+		String key = MERAK_ACCOUNT_SMS_BIND_PRIVATE_MOBILE_NUMBER_KEY + mobileNumber  ;
+		
+		return key ;
+	}
+	
+	public static String getMerakAccountSMSUnBindPrivateMobileNumberKey(String mobileNumber) {
+		
+		String key = MERAK_ACCOUNT_SMS_UNBIND_PRIVATE_MOBILE_NUMBER_KEY + mobileNumber  ;
+		
+		return key ;
+	}
+	
+	public static String getSubAccountSMSUnBindPrivateMobileNumberKey(String mobileNumber) {
+		
+		String key = SUB_ACCOUNT_SMS_UNBIND_PRIVATE_MOBILE_NUMBER_KEY + mobileNumber  ;
+		
+		return key ;
+	}
+	
+	public static String getRankManualSortKey(Long contactId) 
+	{
+		
+		String key = RANK_MANUAL_SORT_KEY + contactId  ;
+		
+		return key ;
+	}
+	
+	public static String getRankManualSortAllContactIdKey() {
+		return RANK_MANUAL_SORT_ALL_CONTACT_ID_KEY; 
+	}
+	
+	public static String getMerakVipDimensionConfigKey(Long eventId) {
+		
+		String key = MERAK_VIP_DIMENSION_CONFIG_KEY + eventId;
+		
+		return key ;
+	}
+	
+	public static String getMerakVipDimensionConfigAllEventIdsKey() {
+		
+		return MERAK_VIP_DIMENSION_CONFIG_ALL_EVENT_IDS_KEY ;
+	}
+	
+	public static String getMerakVipDimensionConfigCacheKey(Long eventId) {
+		
+		String key = MERAK_VIP_DIMENSION_CONFIG_CACHE_KEY + eventId;
+		
+		return key ;
+	}
+	
+	public static String getMerakVipDimensionDefualyGlobalConfigKey(Long eventId) {
+		
+		String key = MERAK_VIP_DIMENSION_DEFAULT_GLOBAL_CONFIG_KEY + eventId;
+		
+		return key ;
+	}
+	
+	public static String getMerakVipDimensionModifyDefualyGlobalConfigPermissionKey(Long eventId) {
+		
+		String key = MERAK_VIP_DIMENSION_MODIFY_DEFAULT_GLOBAL_CONFIG_PERMISSION_KEY + eventId;
+		
+		return key ;
+	}
+	public static String getMerakVipDimensionConfigEventIdKey(Long eventId) {
+		
+		String key = MERAK_VIP_DIMENSION_CONFIG_EVENT_ID_KEY + eventId;
+		
+		return key ;
+	}
+	public static String getMerakVipEventBusinessHotelSessionKey(Long hotelId) {
+		String key = MERAK_VIP_EVENT_BUSINESS_HOTEL_SESSION_KEY + hotelId;
+		return key ;
+	}
+	public static String getMerakVipEventBusinessCurrentThreadContextKey(long thredId) {
+		String key = MERAK_VIP_EVENT_BUSINESS_CURRENT_THREAD_CONTEXT + thredId;
+		return key ;
+	}
+}

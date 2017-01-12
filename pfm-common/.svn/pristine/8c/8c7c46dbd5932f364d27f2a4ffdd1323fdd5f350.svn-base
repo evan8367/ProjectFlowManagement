@@ -1,0 +1,4 @@
+ftp.host=192.168.100.9,192.168.100.10
+ftp.port=21
+ftp.user=test
+ftp.password=123

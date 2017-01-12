@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+
+	<property name="LOG_PATH" value="D:/log" />
+
+	<!-- 输出到控制台 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date|%thread|%X{invokeNo}|%X{ip}|%X{user}|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+    <logger name="com.sdx.merak" level="DEBUG" >
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.springframework.jdbc.core.JdbcTemplate" level="INFO" >
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.springframework" level="ERROR" >
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.quartz" level="ERROR" >
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.apache" level="ERROR" >
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="accesslog" level="INFO" >
+        <appender-ref ref="STDOUT" />
+    </logger>
+	<!-- <root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="logway" />
+	</root> -->
+
+</configuration>

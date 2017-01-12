@@ -1,0 +1,71 @@
+package com.sdx.merak.common.bus;
+
+import java.util.concurrent.ThreadPoolExecutor;
+
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
+import com.sdx.merak.common.utils.ThreadPoolFactory;
+
+/**
+ * 
+ */
+@Component
+@Scope("singleton") 
+public class EventBusFactoryBean implements FactoryBean<EventBus>, InitializingBean {
+
+    private EventBus eventBus;
+
+    private boolean async = true;
+
+    public void setAsync(boolean async) {
+        this.async = async;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (async) {
+            ThreadPoolExecutor threadPoolExecutor = ThreadPoolFactory.getExecutor();
+            eventBus = new AsyncEventBus(threadPoolExecutor);
+
+        } else {
+            eventBus = new EventBus();
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.beans.factory.FactoryBean#getObject()
+     */
+    @Override
+    public EventBus getObject() throws Exception {
+        return eventBus;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.beans.factory.FactoryBean#getObjectType()
+     */
+    @Override
+    public Class<EventBus> getObjectType() {
+        return EventBus.class;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.beans.factory.FactoryBean#isSingleton()
+     */
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
+
+}

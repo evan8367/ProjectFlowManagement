@@ -1,0 +1,31 @@
+package com.sdx.merak.common.sms;
+
+import java.util.List;
+
+import com.sdx.merak.common.sms.dto.SMSChannel;
+import com.sdx.merak.common.sms.dto.resp.SMSOverageResp;
+import com.sdx.merak.common.sms.dto.resp.SMSSendResp;
+
+/**
+ * 短信组件
+ * @author Aaron
+ */
+public interface SMSCommponet {
+	
+
+	/**
+	 * 发送短信
+	 * @param smsSMSChannel @see SMSChannel
+	 * @param mobiles
+	 * @param content  发送内容,由业务逻辑Service配置后传入发送内容
+	 * @param sendTime 为空表示立即发送，定时发送格式2010-10-24 09:08:10
+	 * @return
+	 */
+	SMSSendResp sendSMS(SMSChannel smsSMSChannel, List<String> mobiles, String content, String sendTime);
+	
+	/**
+	 * 余额及发送量查询
+	 * @return
+	 */
+	SMSOverageResp getSMSOverage(SMSChannel smsSMSChannel);
+}

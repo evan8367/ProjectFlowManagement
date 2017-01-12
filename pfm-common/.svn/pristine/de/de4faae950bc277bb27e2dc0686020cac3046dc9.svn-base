@@ -1,0 +1,94 @@
+/**
+ * Copyright &copy; 2015-2025 All rights reserved.
+ */
+package com.sdx.merak.common.persistence;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ * 数据Entity类
+ * 
+ * @author LiuCongwen
+ * @version 2015-08-14
+ */
+public abstract class DataEntity<T> extends BaseEntity<T> {
+
+	private static final long serialVersionUID = 1L;
+
+	protected String createUser; // 创建用户id
+	protected Date createTime; // 创建日期
+	protected String updateUser; // 更新用户id
+	protected Date updateTime; // 更新日期
+	protected String delFlag; // 删除标记，0-未删除，1-已删除
+
+	public DataEntity() {
+		super();
+	}
+
+	public DataEntity(Long id) {
+		super(id);
+	}
+
+	/**
+	 * 插入之前执行方法，需要手动调用
+	 */
+	@Override
+	public void preInsert(String userId) {
+		this.createTime = new Date();
+		this.createUser = userId;
+	}
+
+	/**
+	 * 更新之前执行方法，需要手动调用
+	 */
+	@Override
+	public void preUpdate(String userId) {
+		this.updateTime = new Date();
+		this.updateUser = userId;
+	}
+
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	public String getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+}

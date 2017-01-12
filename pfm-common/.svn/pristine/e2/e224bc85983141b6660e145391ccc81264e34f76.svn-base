@@ -1,0 +1,7 @@
+rabbitMq.host=119.254.98.166
+rabbitMq.port=5672
+rabbitMq.virtualHost=/
+rabbitMq.username=merak
+rabbitMq.password=123456
+rabbitMq.queueName=merak-queue1
+rabbitMq.queueName.recommendCodeGen = recommend-code-gen-queue

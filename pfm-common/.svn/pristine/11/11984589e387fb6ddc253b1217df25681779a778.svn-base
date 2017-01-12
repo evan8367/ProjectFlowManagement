@@ -1,0 +1,13 @@
+package com.sdx.merak.common.fdfs.client;
+
+import java.io.IOException;
+
+import com.sdx.merak.common.fdfs.data.Result;
+import com.sdx.merak.common.fdfs.data.UploadStorage;
+
+public interface TrackerClient {
+
+	public Result<UploadStorage> getUploadStorage() throws IOException;
+	public void close() throws IOException;
+	
+}

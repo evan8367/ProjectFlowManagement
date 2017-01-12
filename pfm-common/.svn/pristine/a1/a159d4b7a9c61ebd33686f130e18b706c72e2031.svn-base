@@ -1,0 +1,124 @@
+package com.sdx.merak.common.fdfs;
+
+import java.io.File;
+
+import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sdx.merak.common.fdfs.client.AbstractClient;
+import com.sdx.merak.common.fdfs.client.StorageClient;
+import com.sdx.merak.common.fdfs.client.StorageClientFactory;
+import com.sdx.merak.common.fdfs.client.TrackerClient;
+import com.sdx.merak.common.fdfs.client.TrackerClientFactory;
+import com.sdx.merak.common.fdfs.data.Result;
+import com.sdx.merak.common.fdfs.data.UploadStorage;
+
+public class FastdfsClientImpl extends AbstractClient implements FastdfsClient {
+
+	private static Logger logger = LoggerFactory.getLogger(FastdfsClientImpl.class);
+	private GenericKeyedObjectPool<String, TrackerClient> trackerClientPool;
+	private GenericKeyedObjectPool<String, StorageClient> storageClientPool;
+	private String trackerAddr = null;
+
+	public FastdfsClientImpl(String trackerAddr) throws Exception {
+		super();
+		this.trackerAddr = trackerAddr;
+		trackerClientPool = new GenericKeyedObjectPool<String, TrackerClient>(new TrackerClientFactory());
+		storageClientPool = new GenericKeyedObjectPool<String, StorageClient>(new StorageClientFactory());
+	}
+
+	public FastdfsClientImpl(String trackerAddr, GenericKeyedObjectPool<String, TrackerClient> trackerClientPool,
+			GenericKeyedObjectPool<String, StorageClient> storageClientPool) {
+		super();
+		this.trackerAddr = trackerAddr;
+		this.trackerClientPool = trackerClientPool;
+		this.storageClientPool = storageClientPool;
+	}
+
+	@Override
+	public void close() {
+		this.trackerClientPool.close();
+		this.storageClientPool.close();
+	}
+
+	private String upload(String localFileName, String ext) throws Exception {
+		String trackerAddr = getTrackerAddr();
+		if (trackerAddr == null || trackerAddr.equals("")) {
+			return null;
+		}
+		TrackerClient trackerClient = null;
+		StorageClient storageClient = null;
+		String storageAddr = null;
+		String fileId = null;
+		Result<UploadStorage> result = null;
+		try {
+			trackerClient = trackerClientPool.borrowObject(trackerAddr);
+			result = trackerClient.getUploadStorage();
+			if (result.getCode() != 0) {
+				throw new RuntimeException("trackerClient error");
+			}
+		} catch (Exception e1) {
+			logger.error(e1.getMessage());
+			if (trackerClient != null) {
+				trackerClientPool.invalidateObject(trackerAddr, trackerClient);
+				trackerClient = null;
+			}
+			throw e1;
+		} finally {
+			if (trackerClient != null) {
+				trackerClientPool.returnObject(trackerAddr, trackerClient);
+			}
+		}
+
+		try {
+			File file = new File(localFileName);
+			storageAddr = result.getData().getAddress();
+			storageClient = storageClientPool.borrowObject(storageAddr);
+			String extname = ext;
+			if (ext == null) {
+				extname = getFileExtName(file);
+			}
+			Result<String> result2 = storageClient.upload(file, extname, result.getData().getPathIndex());
+			if (result2.getCode() == 0) {
+				fileId = result2.getData();
+			} else {
+				throw new RuntimeException("storageClient error");
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			if (storageClient != null) {
+				storageClientPool.invalidateObject(storageAddr, storageClient);
+				storageClient = null;
+			}
+			throw e;
+		} finally {
+			if (storageClient != null) {
+				storageClientPool.returnObject(storageAddr, storageClient);
+			}
+		}
+		return fileId;
+	}
+
+	public String upload(String localFileName) throws Exception {
+		return upload(localFileName, null);
+	}
+
+	public String getTrackerAddr() {
+		return trackerAddr;
+	}
+
+	private String getFileExtName(File file) {
+		String name = file.getName();
+		if (name != null) {
+			int i = name.lastIndexOf('.');
+			if (i > -1) {
+				return name.substring(i + 1);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+}

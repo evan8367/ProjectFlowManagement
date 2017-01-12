@@ -1,0 +1,64 @@
+package com.sdx.merak.common.sms.dto.resp;
+
+import java.io.Serializable;
+
+/**
+ * 状态报告drList行数据对象
+ * @author Aaron
+ *
+ */
+public class SMSDrItemResp implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	/** 手机号 **/
+	private String mobile;
+	/** 对应发送批次Id **/
+	private String taskId;
+	/** 状态报告接收时间**/
+	private String receiveTime;
+	/** 扩展号 **/
+	private String extno;
+	/** 成功 DELIVERD 失败描述 **/
+	private String errorCode;
+	/** 状态-10 成功接收 20 失败 **/
+	private Integer status;
+	
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+	public String getReceiveTime() {
+		return receiveTime;
+	}
+	public void setReceiveTime(String receiveTime) {
+		this.receiveTime = receiveTime;
+	}
+	public String getExtno() {
+		return extno;
+	}
+	public void setExtno(String extno) {
+		this.extno = extno;
+	}
+	public String getErrorCode() {
+		return errorCode;
+	}
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+}
