@@ -3,7 +3,8 @@ var userService = {
 		login : "/pfm-service/sso/user/login.do",
 		register : "/pfm-service/sso/user/register.do",
 		getUserInfo: "/pfm-service/sso/user/getUserInfo.do",
-		logout:"/pfm-service/sso/user/logout.do"
+		logout:"/pfm-service/sso/user/logout.do",
+		uploadAvatar:"/pfm-service/sso/user/uploadAvatar.do"
 	},
 	login : function(username, password, isRemember, callback) {
 		var isSuccess = false;
@@ -68,7 +69,19 @@ var userService = {
 
 	logout : function() {
 		var isSuccess = false;
-		$.get(this.webServiceUrl.logout, function(data, status) {
+		$.get(this.webServiceUrl.logout, function(data, status) {});
+	},
+
+	uploadAvatar : function(form, callback) {
+		$("#upload_avatar_form").ajaxSubmit(function(data){
+			if (data.isSuccess == "S") {
+				if(callback) {
+					callback(data, 
+						data.isSuccess === "S", 
+						data.errorCode, 
+						data.errorMessage);
+				}
+			}
 		});
 	}
 }

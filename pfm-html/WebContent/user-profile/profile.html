@@ -64,9 +64,12 @@
 	<![endif]-->
 	<script src="../assets/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../assets/js/bootstrap.min.js"></script>	
+	<script src="../assets/js/jquery.form.js"></script>	
 	
 	<!-- page scripts -->
 	<script src="../assets/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
+
+	
 	<!-- <script src="http://localhost:8888/bootstrap/originAdmin/assets/js/jquery.easy-pie-chart.min.js"></script> -->
 	
 	<!-- theme scripts -->
@@ -112,13 +115,13 @@
 					
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="text-center">
-								<img class="img-profile" src="../assets/img/avatar.jpg">
+							<div class="text-center" style="height:120px;">
+								<img id="avatar_img" width="120" class="img-profile" src="../assets/img/avatar.jpg">
 							</div>
-							
-							<h3 class="text-center"><strong>Jhon Smith</strong></h3>
-							<h4 class="text-center"><small><i class="fa fa-map-marker"></i> California, USA</small></h4>
-							
+							<form id="upload_avatar_form" action="/pfm-service/sso/user/uploadAvatar.do" enctype="multipart/form-data" method="post">
+								<h3 class="text-center"><strong id="fullname_label"></strong></h3>
+								<h4 class="text-center"><small><a href="Javascript:void(0);" id="upload_avatar_label">Upload Avatar</a></small>&nbsp;<input id="avatar_file" type="file" accept="image/*" style="display: none;" name="file"><input id="upload_avatar_button" type="button" value="Upload" class="btn btn-primary btn-xs" style="display: none;"></input></h4>
+							</form>
 							<hr>
 							
 								<div class="text-center">								

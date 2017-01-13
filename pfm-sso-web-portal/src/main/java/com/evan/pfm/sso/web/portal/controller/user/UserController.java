@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.druid.util.StringUtils;
 import com.evan.pfm.common.controller.BaseController;
@@ -75,6 +76,16 @@ public class UserController extends BaseController{
 		
 		userService.logout(token);
 		
+		return resultDTO.toString();
+	}
+	
+	@RequestMapping("uploadAvatar")
+	public String uploadAvatar(MultipartFile file, HttpServletRequest request) {
+		ResultDTO resultDTO = new ResultDTO();
+		String token = CookieUtils.getCookie(request, USER_TOKEN_NAME);
+
+		User user = userService.uploadAvatar(file, token);
+		resultDTO.addAttribute("user", user);
 		return resultDTO.toString();
 	}
 }

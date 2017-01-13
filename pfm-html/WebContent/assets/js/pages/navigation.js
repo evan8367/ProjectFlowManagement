@@ -7,16 +7,18 @@ $(document).ready(function() {
 
 	var loadUserInfo = function() {
 		var username = $("#navigation_username_label");
+		var avatar = $("#navigation_avatar_img");
 
 		userService.getUserInfo(function(data, isSuccess, errorCode, errorMessage){
 			if(!isSuccess) {
-				alert(errorCode);
+				alert(errorMessage);
 				if(errorCode === "001") {
 					top.location.href="/user-profile/login.html";
 				}
 			}
 			var userInfo = data.userInfo;
 			username.html(userInfo.username);
+			avatar.attr("src", userInfo.avatar);
 		});
 	};
 

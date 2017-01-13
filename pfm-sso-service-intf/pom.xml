@@ -11,6 +11,10 @@
 	<name>pfm-sso-service-intf</name>
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.evan.pfm</groupId>
 			<artifactId>pfm-sso-entity</artifactId>
 		</dependency>

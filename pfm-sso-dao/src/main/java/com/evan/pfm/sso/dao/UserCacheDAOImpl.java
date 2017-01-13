@@ -70,4 +70,11 @@ public class UserCacheDAOImpl extends BaseCacheDAO implements UserCacheDAO {
 		redisTemplate.opsForValue().set(tokenName, id);
 		redisTemplate.expire(tokenName, TIMEOUT, TIMEOUT_UNIT);
 	}
+
+	@Override
+	public void updateUser(User user) {
+		String tokenName = String.format("%s_%s", USER_KEY_NAME, String.valueOf(user.getId()));
+		redisTemplate.opsForValue().set(tokenName, user);
+		redisTemplate.expire(tokenName, TIMEOUT, TIMEOUT_UNIT);
+	}
 }

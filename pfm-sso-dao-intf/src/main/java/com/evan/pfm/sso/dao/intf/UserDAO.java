@@ -7,6 +7,7 @@ import com.evan.pfm.sso.entity.User;
 public interface UserDAO {
 	void insertUser(User user);
 	void deleteUser(Integer id);
+	void updateUser(User user);
 	List<User> getAllUserList();
 	User getUser(Integer id);
 	List<User> getUserByUserNameAndPassword(String username, String password);

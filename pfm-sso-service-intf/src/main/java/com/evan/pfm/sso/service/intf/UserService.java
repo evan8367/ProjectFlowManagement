@@ -2,6 +2,8 @@ package com.evan.pfm.sso.service.intf;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.evan.pfm.sso.entity.User;
 
 public interface UserService {
@@ -10,4 +12,5 @@ public interface UserService {
 	List<User> getAllUser();
 	User getUserByToken(String token);
 	void logout(String token);
+	User uploadAvatar(MultipartFile file, String token);
 }

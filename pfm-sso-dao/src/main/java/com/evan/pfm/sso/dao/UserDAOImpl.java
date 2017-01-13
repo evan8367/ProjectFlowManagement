@@ -36,6 +36,25 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 
 		this.sqlHelper.update(sql, param);
 	}
+	
+	public void updateUser(User user) {
+		String sql = this.getSql("update");
+		Map<String, Object> param = new HashMap<String, Object>();
+
+		param.put("id", user.getId());
+		param.put("company_id", user.getCompanyId());
+		param.put("position_id", user.getPositionId());
+		param.put("username", user.getUsername());
+		param.put("email", user.getEmail());
+		param.put("password", user.getPassword());
+		param.put("create_time", user.getCreateTime());
+		param.put("fullname", user.getFullname());
+		param.put("description", user.getDescription());
+		param.put("avatar", user.getAvatar());
+		param.put("mobile_phone", user.getMobilePhone());
+		
+		this.sqlHelper.update(sql, param);
+	}
 
 	@Override
 	public void deleteUser(Integer id) {

@@ -11,12 +11,12 @@ import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.Topic;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
-import org.springframework.stereotype.Component;
 
 import com.evan.pfm.sso.service.UserServiceImpl;
 
-@Component
+//@Component
 public class MessageConfig {
+	
 	@Autowired
 	UserServiceImpl userService;
 	

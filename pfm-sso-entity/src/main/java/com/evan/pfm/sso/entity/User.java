@@ -92,5 +92,8 @@ public class User implements Serializable  {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	public boolean isEmpty() {
+		return null == this.id || 0 == this.id;
+	}
 }
 

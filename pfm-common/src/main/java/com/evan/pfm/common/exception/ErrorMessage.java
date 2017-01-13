@@ -24,24 +24,9 @@ public enum ErrorMessage {
 	ERROR_002("002", "Login Failed"),
 	
 	/**
-	 * User name is required
+	 * Wrong File Type
 	 */
-	ERROR_003("003", "User name is required"),
-	
-	/**
-	 * Password is required
-	 */
-	ERROR_004("004", "Password is required"),
-	
-	/**
-	 * Full name is required
-	 */
-	ERROR_005("005", "Full name is required"),
-	
-	/**
-	 * E-mail is required
-	 */
-	ERROR_006("006", "E-mail is required");
+	ERROR_003("003", "Wrong File Type, allowed file type are \"Jpg, Jpeg, Png, Gif\"");
 	
 	private String errorCode;
 	private String errorMessage;
