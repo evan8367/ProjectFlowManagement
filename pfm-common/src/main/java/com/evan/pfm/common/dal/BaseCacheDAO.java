@@ -9,8 +9,8 @@ public class BaseCacheDAO {
 	public final static String TOKEN_KEY_NAME="UserToken";
 	public final static String USER_KEY_NAME="User";
 	
-	protected final static Integer TIMEOUT = 20;
-	protected final static TimeUnit TIMEOUT_UNIT = TimeUnit.MINUTES;
+	protected final static Integer TIMEOUT = 24;
+	protected final static TimeUnit TIMEOUT_UNIT = TimeUnit.HOURS;
 	
 	
 	@Autowired

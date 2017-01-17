@@ -1,7 +1,9 @@
 $(document).ready(function() {	
 	var init = function() {
-		$.getScript("/assets/js/service/user-service.js",function(data, textStatus, jqxhr){
-			loadUserInfo();
+		$.getScript("/assets/js/service/base-service.js",function(data, textStatus, jqxhr){
+			$.getScript("/assets/js/service/user-service.js",function(data, textStatus, jqxhr){
+				loadUserInfo();
+			});
 		});
 	};
 
@@ -18,11 +20,6 @@ $(document).ready(function() {
 
 		
 		userService.getUserInfo(function(data, isSuccess, errorCode, errorMessage){
-			if(!isSuccess) {
-				if(errorCode === "001") {
-					return;
-				}
-			}
 			var userInfo = data.userInfo;
 			username.val(userInfo.username);
 			fullname.val(userInfo.fullname);
@@ -51,13 +48,8 @@ $(document).ready(function() {
 
 	$("#upload_avatar_button").click(function(){
 		userService.uploadAvatar($("#upload_avatar_form"), function(data, isSuccess, errorCode, errorMessage){
-			if(!isSuccess) {
-				if(errorCode === "001") {
-					return;
-				}
-				alert("Uploaded");
-				$("#avatar_img").attr("src", data.user.avatar);
-			}
+			alert("Uploaded");
+			$("#avatar_img").attr("src", data.user.avatar);
 		});
 	})
 	

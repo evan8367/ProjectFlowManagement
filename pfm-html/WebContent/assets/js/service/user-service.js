@@ -1,4 +1,4 @@
-var userService = {	
+var userService = {
 	webServiceUrl : {
 		login : "/pfm-service/sso/user/login.do",
 		register : "/pfm-service/sso/user/register.do",
@@ -8,7 +8,7 @@ var userService = {
 	},
 	login : function(username, password, isRemember, callback) {
 		var isSuccess = false;
-		$.post(this.webServiceUrl.login, {
+		baseService.post(this.webServiceUrl.login, {
 			username: username,
 			password: password
 		}, function(data, status) {
@@ -32,7 +32,7 @@ var userService = {
 
 	register : function(username, password, repeatedPassword, fullname, email, mobilePhone, callback) {
 		var isSuccess = false;
-		$.post(this.webServiceUrl.register, {
+		baseService.post(this.webServiceUrl.register, {
 			username: username,
 			password: password, 
 			repeatedPassword:repeatedPassword,
@@ -51,7 +51,8 @@ var userService = {
 	
 	getUserInfo : function(callback) {
 		var isSuccess = false;
-		$.get(this.webServiceUrl.getUserInfo, function(data, status) {
+
+		baseService.get(this.webServiceUrl.getUserInfo, function(data, status) {
 			console.log(JSON.stringify(data));
 			//Need login
 			if(data.errorCode === "001") {
@@ -69,11 +70,11 @@ var userService = {
 
 	logout : function() {
 		var isSuccess = false;
-		$.get(this.webServiceUrl.logout, function(data, status) {});
+		baseService.get(this.webServiceUrl.logout, function(data, status) {});
 	},
 
 	uploadAvatar : function(form, callback) {
-		$("#upload_avatar_form").ajaxSubmit(function(data){
+		baseService.ajaxSubmit($("#upload_avatar_form"), function(data){
 			if (data.isSuccess == "S") {
 				if(callback) {
 					callback(data, 
@@ -83,5 +84,6 @@ var userService = {
 				}
 			}
 		});
+		
 	}
 }

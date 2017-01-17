@@ -1,14 +1,18 @@
 $(document).ready(function() {
 	
 	var init = function() {
-		$.getScript("/assets/js/service/user-service.js",function(data, textStatus, jqxhr){
-			$("#login_form").validationEngine({
-				promptPosition : "centerRight", 
-				autoPositionUpdate: true,
-				binded: false
-			});
-			loadUsername();
-			common.proventGoBack();
+		$.getScript("/assets/js/pages/base-page.js",function(data, textStatus, jqxhr){
+			$.getScript("/assets/js/service/base-service.js",function(data, textStatus, jqxhr){
+				$.getScript("/assets/js/service/user-service.js",function(data, textStatus, jqxhr){
+					$("#login_form").validationEngine({
+						promptPosition : "centerRight", 
+						autoPositionUpdate: true,
+						binded: false
+					});
+					loadUsername();
+					common.proventGoBack();
+				});
+			}); 
 		}); 
 	};
 
@@ -22,7 +26,6 @@ $(document).ready(function() {
 		}
 	};
 	$("#login_button").click(function() {
-
         if ($("#login_form").validationEngine('validate') == false) {
         	$("#login_form").validationEngine();
         	return;
