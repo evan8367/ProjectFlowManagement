@@ -1,4 +1,4 @@
-package com.evan.pfm.sso.web.portal.controller;
+package com.evan.pfm.common.controller;
 
 import java.io.IOException;
 
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import com.evan.pfm.common.controller.ResultDTO;
 import com.evan.pfm.common.exception.BusinessException;
 import com.evan.pfm.common.exception.ErrorMessage;
 

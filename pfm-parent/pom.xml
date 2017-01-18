@@ -290,6 +290,13 @@
 		<module>../pfm-sso-service</module>
 		<module>../pfm-sso-service-intf</module>
 		<module>../pfm-sso-web-portal</module>
+		<module>../pfm-project-dao</module>
+		<module>../pfm-project-dao-intf</module>
+		<module>../pfm-project-service</module>
+		<module>../pfm-project-service-intf</module>
+		<module>
+			../pfm-project-web-portal/pfm-project-web-portal
+		</module>
 	</modules>
 
 	<distributionManagement>

@@ -1,4 +1,4 @@
-package com.evan.pfm.sso.web.portal.controller.user;
+package com.evan.pfm.sso.web.portal.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
