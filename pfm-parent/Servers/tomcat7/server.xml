@@ -24,14 +24,12 @@
 	<GlobalNamingResources>
 		<!-- Editable user database that can also be used by UserDatabaseRealm 
 			to authenticate users -->
-			<!--
 		<Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
-		 
+		<!-- 
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory" maxActive="3000" maxIdel="500" maxWait="3000" name="merakDs01" password="zhenNanYin2015" type="javax.sql.DataSource" url="jdbc:mysql://192.168.100.15:3306/merak?useUnicode=true&amp;characterEncoding=UTF-8" username="dbRoot"/>
-		 
-		 
+		 -->
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory" maxActive="200" maxIdel="10" maxWait="1000" name="merakDs01" password="zhenNanYin2015" type="javax.sql.DataSource" url="jdbc:mysql://119.254.98.166:3306/merak?useUnicode=true&amp;characterEncoding=UTF-8" username="dbRoot"/>
-		-->
+		 
 	</GlobalNamingResources>
 
 	<!-- A "Service" is a collection of one or more "Connectors" that share 
@@ -96,7 +94,7 @@
 				<!-- Access log processes all example. Documentation at: /docs/config/valve.html 
 					Note: The pattern used is equivalent to using pattern="common" -->
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log." suffix=".txt"/>               
-            <Context docBase="pfm-sso-web-portal" path="/pfm-sso" reloadable="true" source="org.eclipse.jst.j2ee.server:pfm-sso-web-portal"/></Host>
+            <Context docBase="pfm-sso-web-portal" path="/pfm-sso" reloadable="true" source="org.eclipse.jst.jee.server:pfm-sso-web-portal"/></Host>
            </Engine>
 	</Service>
 </Server>

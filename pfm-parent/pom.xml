@@ -67,12 +67,6 @@
 				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>3.0.1</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
 				<groupId>com.evan.pfm</groupId>
 				<artifactId>pfm-common</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
@@ -168,6 +162,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -294,9 +289,10 @@
 		<module>../pfm-project-dao-intf</module>
 		<module>../pfm-project-service</module>
 		<module>../pfm-project-service-intf</module>
-		<module>
-			../pfm-project-web-portal/pfm-project-web-portal
-		</module>
+		
+		<module>../pfm-project-entity</module>
+		
+		<module>../pfm-project-web-portal</module>
 	</modules>
 
 	<distributionManagement>

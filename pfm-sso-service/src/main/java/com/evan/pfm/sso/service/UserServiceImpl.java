@@ -42,7 +42,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 	public String login(String username, String password) {
 		// messageConfig.sendMessage("user", "用户消息");
 		// this.sendMessage("role1", "角色消息");
-
+		
 		if (StringUtils.isEmpty(username))
 			throw new InvalidArgumentException("User name", ErrorType.RequiredType);
 		if (StringUtils.isEmpty(password))
