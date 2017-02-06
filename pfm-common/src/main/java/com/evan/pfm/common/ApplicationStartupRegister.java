@@ -3,10 +3,16 @@ package com.evan.pfm.common;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class ApplicationStartupRegister {
+	private static ApplicationStartupRegister instance=new ApplicationStartupRegister();
+    private ApplicationStartupRegister(){
+        
+    }
+    public static ApplicationStartupRegister getInstance(){
+        return instance;
+    }
+    
 	static Set<ApplicationStartupAction> actions = new HashSet<ApplicationStartupAction>();
 	
 	protected synchronized void registerAction(ApplicationStartupAction startupAction) {

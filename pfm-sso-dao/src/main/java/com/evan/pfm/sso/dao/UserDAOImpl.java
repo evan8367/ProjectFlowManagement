@@ -4,18 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.evan.pfm.common.dal.BaseDAO;
-import com.evan.pfm.common.dal.SqlHelper;
 import com.evan.pfm.sso.dao.intf.UserDAO;
 import com.evan.pfm.sso.entity.User;
 
 @Repository
 public class UserDAOImpl extends BaseDAO implements UserDAO {
-	@Autowired
-	SqlHelper sqlHelper;
+	
 
 	@Override
 	public void insertUser(User user) {
@@ -68,7 +65,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 	@Override
 	public List<User> getAllUserList() {
 		String sql = this.getSql("select_all");
-		return this.sqlHelper.queryForList(sql, null, User.class);
+		return this.sqlHelper.findAll(sql, null, User.class);
 	}
 
 	@Override

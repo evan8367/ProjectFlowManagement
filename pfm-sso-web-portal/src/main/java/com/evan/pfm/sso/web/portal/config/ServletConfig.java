@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 
 @Configuration
-@ComponentScan(basePackages = "com.evan.pfm.sso.web.portal.controller")
+@ComponentScan(basePackages = "com.evan.pfm.web.portal.controller.*")
 public class ServletConfig extends WebMvcConfigurationSupport {
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {

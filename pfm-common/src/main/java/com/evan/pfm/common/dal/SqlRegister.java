@@ -10,11 +10,9 @@ import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.stereotype.Component;
 
 import com.evan.pfm.common.ApplicationStartupAction;
 
-@Component
 public class SqlRegister extends ApplicationStartupAction {
 	
 	
@@ -23,6 +21,7 @@ public class SqlRegister extends ApplicationStartupAction {
 	
 	public synchronized <T> void RegisterSqlFile(Class<T> clazz) {
 		sqlFilePath.add(clazz.getInterfaces()[0].getSimpleName());
+		this.registerStartup();
 	}
 	
 	@Override
@@ -34,7 +33,7 @@ public class SqlRegister extends ApplicationStartupAction {
 			for (String sql : sqlFilePath) {
 				path[index.getAndIncrement()] = sql;
 			}
-			setProperties(path);
+			this.setProperties(path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

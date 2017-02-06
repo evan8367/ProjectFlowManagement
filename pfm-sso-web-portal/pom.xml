@@ -36,6 +36,14 @@
 			<artifactId>pfm-sso-service</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.evan.pfm</groupId>
+			<artifactId>pfm-project-service-intf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.evan.pfm</groupId>
+			<artifactId>pfm-project-service</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 		</dependency>

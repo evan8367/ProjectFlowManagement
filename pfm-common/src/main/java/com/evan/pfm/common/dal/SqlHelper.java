@@ -14,29 +14,23 @@ public class SqlHelper {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	public <T> T find(String sql, Map<String, Object> paramMap, Class<T> clazz) {
-		return (T)this.jdbcTemplate.queryForObject(sql, paramMap, new BeanPropertyRowMapper<T>(clazz));
+	public <T> T find(String sql, Map<String, Object> param, Class<T> clazz) {
+		return (T)this.jdbcTemplate.queryForObject(sql, param, new BeanPropertyRowMapper<T>(clazz));
 	}
 	
-	public <T> List<T> findAll(String sql, Map<String, Object> paramMap, Class<T> clazz) {
-		return (List<T>)this.jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<T>(clazz));
+	public <T> List<T> findAll(String sql, Map<String, Object> param, Class<T> clazz) {
+		return this.jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<T>(clazz));
 	}
 	
-	public void update(String sql, Map<String, Object> paramMap) {
-		this.jdbcTemplate.update(sql, paramMap);
+	public void update(String sql, Map<String, Object> param) {
+		this.jdbcTemplate.update(sql, param);
 	}
 	
-	public Map<String, Object> queryForMap(String sql, Map<String, ?> paramMap) {
+	public Map<String, Object> queryForMap(String sql, Map<String, ?> param) {
 		try {
-			return this.jdbcTemplate.queryForMap(sql, paramMap);
+			return this.jdbcTemplate.queryForMap(sql, param);
 		} catch (IncorrectResultSizeDataAccessException e) {
 			return null;
 		}
 	}
-	
-	public <T> List<T> queryForList(String sql, Map<String, ?> map, Class<T> clazz) {
-		return this.jdbcTemplate.query(sql, map, new BeanPropertyRowMapper<T>(clazz));
-	}
-	
-
 }
