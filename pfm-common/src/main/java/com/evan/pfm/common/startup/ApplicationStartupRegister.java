@@ -1,10 +1,10 @@
-package com.evan.pfm.common;
+package com.evan.pfm.common.startup;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class ApplicationStartupRegister {
+public final class ApplicationStartupRegister {
 	private static ApplicationStartupRegister instance=new ApplicationStartupRegister();
     private ApplicationStartupRegister(){
         

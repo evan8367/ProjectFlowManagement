@@ -26,7 +26,7 @@ public class Project implements Serializable  {
 	private Date actualStartDate;
 	private Date actualEndDate;
 	private String cover;
-	private ProjectStatus status;
+	private Integer status;
 	private Date createdTime;
 	public void setId(Integer id){
 		this.id=id;
@@ -76,10 +76,10 @@ public class Project implements Serializable  {
 	public String getCover(){
 		return cover;
 	}
-	public ProjectStatus getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(ProjectStatus status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	public Date getCreatedTime() {

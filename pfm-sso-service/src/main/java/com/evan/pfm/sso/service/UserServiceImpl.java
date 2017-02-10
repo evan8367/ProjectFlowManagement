@@ -14,8 +14,6 @@ import com.alibaba.druid.util.StringUtils;
 import com.evan.pfm.common.config.PropertiesConfig;
 import com.evan.pfm.common.exception.BusinessException;
 import com.evan.pfm.common.exception.ErrorMessage;
-import com.evan.pfm.common.exception.InvalidArgumentException;
-import com.evan.pfm.common.exception.InvalidArgumentException.ErrorType;
 import com.evan.pfm.common.service.BaseService;
 import com.evan.pfm.common.util.Md5Util;
 import com.evan.pfm.sso.dao.intf.UserCacheDAO;
@@ -44,9 +42,9 @@ public class UserServiceImpl extends BaseService implements UserService {
 		// this.sendMessage("role1", "角色消息");
 		
 		if (StringUtils.isEmpty(username))
-			throw new InvalidArgumentException("User name", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_USERNAME);
 		if (StringUtils.isEmpty(password))
-			throw new InvalidArgumentException("Password", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_PASSWORD);
 
 		String userToken = new String();
 		List<User> userList = this.userDAO.getUserByUserNameAndPassword(username, Md5Util.MD5(password));
@@ -88,17 +86,17 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 
 	@Override
-	public void register(String username, String email, String password, String repeatedPassword, String fullname, String mobilePhone) {
+	public void register(String username, String email, String password, String repeatedPassword, String fullname, String mobilePhone)  throws BusinessException{
 		if (StringUtils.isEmpty(username))
-			throw new InvalidArgumentException("User name", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_USERNAME);
 		if (StringUtils.isEmpty(email))
-			throw new InvalidArgumentException("Email", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_USER_EMAIL);
 		if (StringUtils.isEmpty(password))
-			throw new InvalidArgumentException("Password", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_PASSWORD);
 		if (StringUtils.isEmpty(repeatedPassword))
-			throw new InvalidArgumentException("Repeated Password", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_USER_REPEATED_PASSWORD);
 		if (StringUtils.isEmpty(fullname))
-			throw new InvalidArgumentException("Full name", ErrorType.RequiredType);
+			throw new BusinessException(ErrorMessage.ERROR_REQUIRED_FULL_NAME);
 
 		User user = new User();
 		user.setUsername(username);

@@ -1,10 +1,10 @@
 var userService = {
 	webServiceUrl : {
-		login : "/pfm-service/sso/user/login.do",
-		register : "/pfm-service/sso/user/register.do",
-		getUserInfo: "/pfm-service/sso/user/getUserInfo.do",
-		logout:"/pfm-service/sso/user/logout.do",
-		uploadAvatar:"/pfm-service/sso/user/uploadAvatar.do"
+		login : "/pfm-sso-service/user/login.do",
+		register : "/pfm-sso-service/user/register.do",
+		getUserInfo: "/pfm-sso-service/user/getUserInfo.do",
+		logout:"/pfm-sso-service/user/logout.do",
+		uploadAvatar:"/pfm-sso-service/user/uploadAvatar.do"
 	},
 	login : function(username, password, isRemember, callback) {
 		var isSuccess = false;

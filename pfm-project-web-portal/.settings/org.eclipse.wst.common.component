@@ -6,19 +6,25 @@
         <dependent-module archiveName="pfm-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-common/pfm-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="pfm-sso-entity-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-sso-entity/pfm-sso-entity">
+        <dependent-module archiveName="pfm-project-entity-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-project-entity/pfm-project-entity">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pfm-project-service-intf-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-project-service-intf/pfm-project-service-intf">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pfm-project-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-project-service/pfm-project-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pfm-project-dao-intf-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-project-dao-intf/pfm-project-dao-intf">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pfm-project-dao-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-project-dao/pfm-project-dao">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="pfm-sso-service-intf-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-sso-service-intf/pfm-sso-service-intf">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="pfm-sso-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-sso-service/pfm-sso-service">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="pfm-sso-dao-intf-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-sso-dao-intf/pfm-sso-dao-intf">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="pfm-sso-dao-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-sso-dao/pfm-sso-dao">
+        <dependent-module archiveName="pfm-sso-entity-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pfm-sso-entity/pfm-sso-entity">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="pfm-project-web-portal"/>

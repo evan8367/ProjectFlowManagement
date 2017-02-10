@@ -19,7 +19,8 @@ public class PropertiesConfig {
 		Resource[] resources = {
 				resolver.getResource("classpath:config/database/data_source_"+environment+".properties"),
 				resolver.getResource("classpath:config/redis/redis_"+environment+".properties"),
-				resolver.getResource("classpath:config/img/img_"+environment+".properties")
+				resolver.getResource("classpath:config/img/img_"+environment+".properties"),
+				resolver.getResource("classpath:config/dubbo/dubbo_"+environment+".properties")
 		};
 		
 		propertiesFactoryBean.setLocations(resources);

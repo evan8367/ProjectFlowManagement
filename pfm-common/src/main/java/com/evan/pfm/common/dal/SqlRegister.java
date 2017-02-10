@@ -11,7 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import com.evan.pfm.common.ApplicationStartupAction;
+import com.evan.pfm.common.startup.ApplicationStartupAction;
 
 public class SqlRegister extends ApplicationStartupAction {
 	

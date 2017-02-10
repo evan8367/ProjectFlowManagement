@@ -2,7 +2,7 @@ package com.evan.pfm.common.service;
 
 import org.springframework.stereotype.Component;
 
-import com.evan.pfm.common.ApplicationStartupAction;
+import com.evan.pfm.common.startup.ApplicationStartupAction;
 
 @Component
 public class ServiceStartup extends ApplicationStartupAction {

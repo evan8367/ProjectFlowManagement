@@ -1,4 +1,4 @@
-package com.evan.pfm.sso.web.portal.config;
+package com.evan.pfm.project.web.portal.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,10 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 
 @Configuration
-@ComponentScan(basePackages = {
-		"com.evan.pfm.common.exception",
-		"com.evan.pfm.common.controller",
-		"com.evan.pfm.sso.web.portal.*" })
+@ComponentScan(basePackages = "com.evan.pfm.project.web.portal.controller")
 public class ServletConfig extends WebMvcConfigurationSupport {
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {

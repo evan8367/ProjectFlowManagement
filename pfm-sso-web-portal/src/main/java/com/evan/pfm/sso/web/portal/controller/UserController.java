@@ -16,10 +16,8 @@ import com.evan.pfm.sso.entity.User;
 import com.evan.pfm.sso.service.intf.UserService;
 
 @RestController
-@RequestMapping(value="sso/user/", produces="application/json; charset=UTF-8")
+@RequestMapping(value="user/", produces="application/json; charset=UTF-8")
 public class UserController extends BaseController{
-	
-	protected final static String USER_TOKEN_NAME = "UserToken";
 	
 	@Autowired
 	UserService userService;

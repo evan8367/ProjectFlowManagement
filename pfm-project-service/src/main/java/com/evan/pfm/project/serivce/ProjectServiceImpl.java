@@ -1,6 +1,7 @@
 package com.evan.pfm.project.serivce;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,15 @@ import com.evan.pfm.project.dao.intf.ProjectDAO;
 import com.evan.pfm.project.entity.Project;
 import com.evan.pfm.project.entity.Project.ProjectStatus;
 import com.evan.pfm.service.intf.ProjectService;
+import com.evan.pfm.sso.entity.User;
+import com.evan.pfm.sso.service.intf.UserService;
 
 @Service
 public class ProjectServiceImpl extends BaseService implements ProjectService {
 
+	@Autowired
+	UserService userService;
+	
 	@Autowired
 	private ProjectDAO projectDAO;
 	
@@ -34,9 +40,9 @@ public class ProjectServiceImpl extends BaseService implements ProjectService {
 	}
 
 	@Override
-	public void getProjectByUser(Integer userId) {
-		// TODO Auto-generated method stub
-
+	public List<Project> getProjectByUser(String userToken) {
+		User user = userService.getUserByToken(userToken);
+		return this.projectDAO.getByUserId(user.getId());
 	}
 
 }

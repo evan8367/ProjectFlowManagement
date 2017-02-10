@@ -1,6 +1,7 @@
 package com.evan.pfm.project.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -36,10 +37,10 @@ public class ProjectDAOImpl extends BaseDAO implements ProjectDAO {
 	}
 
 	@Override
-	public void getByUserId(Integer userId) {
+	public List<Project> getByUserId(Integer userId) {
 		String sql = this.getSql("select_by_user_id");
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("id", param);
-		this.sqlHelper.findAll(sql, param, Project.class);
+		return this.sqlHelper.findAll(sql, param, Project.class);
 	}
 }

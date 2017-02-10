@@ -27,15 +27,15 @@
 		</dependency>
 		<dependency>
 			<groupId>com.evan.pfm</groupId>
-			<artifactId>pfm-sso-entity</artifactId>
+			<artifactId>pfm-project-entity</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.evan.pfm</groupId>
-			<artifactId>pfm-sso-service-intf</artifactId>
+			<artifactId>pfm-project-service-intf</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.evan.pfm</groupId>
-			<artifactId>pfm-sso-service</artifactId>
+			<artifactId>pfm-project-service</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>

@@ -1,4 +1,4 @@
-package com.evan.pfm.sso.web.portal.config;
+package com.evan.pfm.project.web.portal.config;
 
 import javax.servlet.Filter;
 import javax.servlet.ServletContext;
@@ -13,8 +13,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-//		return new Class[] { AppConfig.class };
-		return new Class[] { };
+		return new Class[] { AppConfig.class };
 	}
 
 	@Override

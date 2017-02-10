@@ -1,4 +1,4 @@
-package com.evan.pfm.common;
+package com.evan.pfm.common.startup;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

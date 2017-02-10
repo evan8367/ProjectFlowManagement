@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 public class CookieUtils {
@@ -74,6 +76,19 @@ public class CookieUtils {
 	 */
 	public static String getCookie(HttpServletRequest request, String name) {
 		return getCookie(request, null, name, false);
+	}
+	/**
+	 * 获得指定Cookie的值
+	 * @param name 名称
+	 * @return 值
+	 */
+	public static String getCookie(String name) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes()).getRequest();
+		
+		if(request != null)
+			return getCookie(request, name);
+		return null;
 	}
 	/**
 	 * 获得指定Cookie的值，并删除。

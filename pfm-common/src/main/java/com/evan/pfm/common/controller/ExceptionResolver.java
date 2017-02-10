@@ -14,10 +14,13 @@ import com.evan.pfm.common.exception.ErrorMessage;
 
 @Component
 public class ExceptionResolver extends SimpleMappingExceptionResolver {	
+	public ExceptionResolver() {
+		System.out.println("ExceptionResolver");
+	}
 	protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception ex)  {
 		ResultDTO resultDTO;
-		
+		 ModelAndView mv = new ModelAndView();
 		try {
 			if(ex instanceof BusinessException) {
 				BusinessException businessException = (BusinessException)ex;
@@ -33,6 +36,6 @@ public class ExceptionResolver extends SimpleMappingExceptionResolver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return mv;
 	}
 }

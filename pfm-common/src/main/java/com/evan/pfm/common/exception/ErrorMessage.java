@@ -3,9 +3,14 @@ package com.evan.pfm.common.exception;
 public enum ErrorMessage {
 	
 	/**
-	 * Unknown Error
+	 * is required
 	 */
-	ERROR_REQUIRED("-001", "Required Error"),
+	ERROR_REQUIRED_USERNAME("1000", "Username is required"),
+	ERROR_REQUIRED_PASSWORD("1001", "Password is required"),
+	ERROR_REQUIRED_USER_TOKEN("1002", "User token is required"),
+	ERROR_REQUIRED_USER_EMAIL("1003", "User email is required"),
+	ERROR_REQUIRED_USER_REPEATED_PASSWORD("1004", "User repeaterd password is required"),
+	ERROR_REQUIRED_FULL_NAME("1005", "Full name is required"),
 	
 	/**
 	 * Unknown Error

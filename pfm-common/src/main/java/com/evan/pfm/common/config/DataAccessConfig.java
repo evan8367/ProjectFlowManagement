@@ -22,6 +22,7 @@ public class DataAccessConfig {
 	
 	@Bean
 	public DataSource pfmDataSource() throws PropertyVetoException, IOException {
+		System.out.println("Get Data Source");
 		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setDriverClassName(propertiesConfig.getProperties().getProperty("driverClassName"));
 		dataSource.setUrl(propertiesConfig.getProperties().getProperty("jdbc.url"));

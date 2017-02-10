@@ -1,4 +1,4 @@
-package com.evan.pfm.common;
+package com.evan.pfm.common.startup;
 
 public abstract class ApplicationStartupAction {
 	
