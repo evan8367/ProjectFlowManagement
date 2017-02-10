@@ -22,6 +22,24 @@
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>com.evan.pfm</groupId>
 			<artifactId>pfm-common</artifactId>
 		</dependency>
@@ -32,10 +50,6 @@
 		<dependency>
 			<groupId>com.evan.pfm</groupId>
 			<artifactId>pfm-project-service-intf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.evan.pfm</groupId>
-			<artifactId>pfm-project-service</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>

@@ -1,8 +1,7 @@
-package com.evan.pfm.project.service.config;
+package com.evan.pfm.project.web.portal.config;
 
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
@@ -15,10 +14,8 @@ import com.alibaba.dubbo.config.MonitorConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.alibaba.dubbo.config.ServiceConfig;
 import com.evan.pfm.common.startup.ApplicationStartupAction;
 import com.evan.pfm.service.intf.ProjectService;
-import com.evan.pfm.sso.service.intf.UserService;
 
 @Component
 public class DubboConfig extends ApplicationStartupAction {
@@ -28,18 +25,9 @@ public class DubboConfig extends ApplicationStartupAction {
 	MonitorConfig monitor;
 	ProtocolConfig protocol;
 
-	@Autowired
-	ProjectService projectService;
-
 	@Override
 	public void onStartup() {
-		try {
-			this.initConfig();
-			this.registerProvider();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	private void initConfig() throws Exception {
@@ -71,28 +59,14 @@ public class DubboConfig extends ApplicationStartupAction {
 		protocol.setThreads(200);
 	}
 
-	private void registerProvider() {
-		// ProjectServicce
-		ServiceConfig<ProjectService> service = new ServiceConfig<ProjectService>();
-		service.setApplication(application);
-		service.setRegistry(registry); // 多个注册中心可以用setRegistries()
-		service.setProtocol(protocol); // 多个协议可以用setProtocols()
-		service.setMonitor(monitor);
-		service.setInterface(ProjectService.class);
-		service.setRef(projectService);
-		service.export();
-		System.out.println("ProjectService exported");
-	}
-
 	@Bean
-	public UserService userService() throws Exception {
-
+	public ProjectService projectService() throws Exception {
 		this.initConfig();
-		ReferenceConfig<UserService> reference = new ReferenceConfig<UserService>();
+		ReferenceConfig<ProjectService> reference = new ReferenceConfig<ProjectService>();
 		reference.setApplication(application);
 		reference.setRegistry(registry); // 多个注册中心可以用setRegistries()
 		reference.setMonitor(monitor);
-		reference.setInterface(UserService.class);
+		reference.setInterface(ProjectService.class);
 		reference.setCheck(false);
 		reference.setTimeout(2000);
 		reference.setRetries(0);

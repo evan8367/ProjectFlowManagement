@@ -7,3 +7,5 @@ pfm-html/.DS_Store
 
 pfm-html/.DS_Store
 /target/
+
+pfm-sso-service/logs/edu-service-user.log

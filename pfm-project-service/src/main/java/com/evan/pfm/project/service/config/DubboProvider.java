@@ -1,9 +1,10 @@
-package com.evan.pfm.sso.service;
+package com.evan.pfm.project.service.config;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class DubboProvider {
 
+	@SuppressWarnings("unused")
 	private static ClassPathXmlApplicationContext context;
 
 	public static void main(String[] args) {
@@ -20,5 +21,4 @@ public class DubboProvider {
 			}
 		}
 	}
-
 }

@@ -1,23 +1,18 @@
 package com.evan.pfm.project.entity;
 
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 public class Project implements Serializable  {
 	
+	public static final Integer projectStatusNew = 1;
+	public static final Integer projectStatusInProgress= 2;
+	public static final Integer projectStatusInComplete= 3;
+	public static final Integer projectStatusInPending= 4;
+	public static final Integer projectStatusInDeleted= 5;
+	
 	private static final long serialVersionUID = 1L;
 	
-	public enum ProjectStatus {
-		New(1), InProgress(2), Complete(3), Deleted(4);
-		Integer value;
-		private ProjectStatus(Integer value) {
-			this.value = value;
-		}
-		public Integer getValue() {
-			return value;
-		}
-	}
-
 	private Integer id;
 	private String name;
 	private String description;

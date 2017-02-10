@@ -24,7 +24,7 @@ public class ProjectDAOImpl extends BaseDAO implements ProjectDAO {
 		param.put("actual_start_date", project.getActualStartDate());
 		param.put("actual_end_date", project.getActualEndDate());
 		param.put("cover", project.getCover());
-		param.put("status", project.getStatus().getValue());
+		param.put("status", project.getStatus());
 		this.sqlHelper.update(sql, param);
 	}
 

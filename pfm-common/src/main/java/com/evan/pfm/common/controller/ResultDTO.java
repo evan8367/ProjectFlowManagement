@@ -1,9 +1,8 @@
 package com.evan.pfm.common.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.evan.pfm.common.exception.ErrorMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ResultDTO {
 	
-	@Autowired
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	private Map<String, Object> responseResult = new HashMap<String, Object>();
@@ -39,6 +37,7 @@ public class ResultDTO {
 	public String toString() {
 		String result = "";
 		try {
+			objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 			result = objectMapper.writeValueAsString(this.responseResult);
 		} catch (JsonProcessingException e) {
 			return result;

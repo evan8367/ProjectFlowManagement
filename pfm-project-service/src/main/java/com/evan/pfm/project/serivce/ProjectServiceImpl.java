@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.evan.pfm.common.service.BaseService;
 import com.evan.pfm.project.dao.intf.ProjectDAO;
 import com.evan.pfm.project.entity.Project;
-import com.evan.pfm.project.entity.Project.ProjectStatus;
 import com.evan.pfm.service.intf.ProjectService;
 import com.evan.pfm.sso.entity.User;
 import com.evan.pfm.sso.service.intf.UserService;
@@ -32,7 +31,7 @@ public class ProjectServiceImpl extends BaseService implements ProjectService {
 		project.setPlanEndDate(planEndDate);
 		project.setActualStartDate(actualStartDate);
 		project.setActualEndDate(actualEndDate);
-		project.setStatus(ProjectStatus.New);
+		project.setStatus(Project.projectStatusNew);
 		project.setCover(cover);
 		project.setCreatedTime(new Date());
 		
