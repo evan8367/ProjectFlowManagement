@@ -100,7 +100,7 @@
 				
 
 				
-			<Context docBase="pfm-sso-web-portal" path="pfm-sso-web-portal" reloadable="true" source="org.eclipse.jst.jee.server:pfm-sso-web-portal"/><Context docBase="pfm-project-web-portal" path="/pfm-project-web-portal" reloadable="true" source="org.eclipse.jst.jee.server:pfm-project-web-portal"/></Host>
+			<Context docBase="pfm-sso-web-portal" path="pfm-sso-web-portal" reloadable="true" source="org.eclipse.jst.jee.server:pfm-sso-web-portal"/></Host>
 
 		</Engine>
 	</Service>

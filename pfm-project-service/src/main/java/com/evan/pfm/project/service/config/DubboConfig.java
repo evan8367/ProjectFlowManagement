@@ -47,7 +47,7 @@ public class DubboConfig extends ApplicationStartupAction {
 			return;
 
 		application = new ApplicationConfig();
-		application.setName("pfm-sso-service");
+		application.setName("pfm-project-service");
 		String environment = "DEV";
 		PropertiesFactoryBean properties = new PropertiesFactoryBean();
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -66,7 +66,7 @@ public class DubboConfig extends ApplicationStartupAction {
 
 		protocol = new ProtocolConfig();
 		protocol.setName("dubbo");
-		String port = property.getProperty("dubbo.sso_port");
+		String port = property.getProperty("dubbo.project_port");
 		protocol.setPort(Integer.valueOf(port));
 		protocol.setThreads(200);
 	}

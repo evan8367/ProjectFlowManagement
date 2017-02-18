@@ -1,14 +1,15 @@
 package com.evan.pfm.sso.service;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.druid.util.StringUtils;
 import com.evan.pfm.common.config.PropertiesConfig;
@@ -116,21 +117,29 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	@Override
 	@Transactional
-	public User uploadAvatar(MultipartFile file, String token) {
-		User user = this.getUserByToken(token);
-
-		String fileName = file.getOriginalFilename();
+	public User uploadAvatar(String token, String fileName, byte[] fileBytes) {
+		User user = this.getUserByToken(token);		
 		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
 		if (!"jpg".equals(suffix) && !"jpeg".equals(suffix) && !"png".equals(suffix) && !"gif".equals(suffix)) {
 			throw new BusinessException(ErrorMessage.ERROR_003);
 		}
-
+		InputStream in = new ByteArrayInputStream(fileBytes);
 		String filePath = String.format("%suser_avatar/%d.%s", propertiesConfig.getProperties().getProperty("img.disk.path"), user.getId(), suffix);
 		String fileUrl = String.format("%suser_avatar/%d.%s", propertiesConfig.getProperties().getProperty("img.url"), user.getId(), suffix);
-		File destFile = new File(filePath);
+//		File destFile = new File(filePath);
 		try {
-			file.transferTo(destFile);
+			FileOutputStream out = new FileOutputStream(filePath);  
+            int n = -1;  
+            byte[] b = new byte[10240];  
+            while((n=in.read(b)) != -1){  
+                System.out.println(new String(b,0,n,"utf-8"));  
+                out.write(b, 0, n);  
+            }  
+            out.close();  
+            out.flush();  
+            in.close();  
+            
 			this.userCacheDAO.updateUser(user);
 			user.setAvatar(fileUrl);
 			this.userDAO.updateUser(user);

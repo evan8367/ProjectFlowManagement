@@ -40,13 +40,10 @@ $(document).ready(function(){
 	};
 
 	var loadProjectInfo = function() {
-
 		projectService.getProjectList(function(data, isSuccess, errorCode, errorMessage) {
-			alert(data);
-			return;
-			$("#project_item_template").tmpl(projects, {
+			$("#project_item_template").tmpl(data.projectList, {
 				getFirstLetter: function () {
-					return this.data.name.substr(0,1);
+					return this.data.name.substr(0,1).toUpperCase();
 				}
 			}).appendTo("#project_collection");
 		});

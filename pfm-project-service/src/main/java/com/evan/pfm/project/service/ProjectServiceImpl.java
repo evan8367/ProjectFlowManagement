@@ -1,4 +1,4 @@
-package com.evan.pfm.project.serivce;
+package com.evan.pfm.project.service;
 
 import java.util.Date;
 import java.util.List;
